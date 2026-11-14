@@ -42,8 +42,52 @@
     return html + "</article>";
   }
 
+  // several works shown as one project (CeREELs): a short opening, links to each work, then the works in order
+  function group(p) {
+    var links = p.parts.map(function (q) {
+      return '<a href="#' + esc(q.slug) + '">' + esc(q.title) + "</a>";
+    }).join("");
+    return '<header class="g-head" id="' + esc(p.slug) + '">' +
+        '<p class="p-kicker">' + esc(p.kicker) + "</p>" +
+        '<h1 class="g-title">' + esc(p.title) + "</h1>" +
+        '<p class="g-desc">' + esc(p.desc) + "</p>" +
+        (p.type ? '<p class="g-type">' + esc(p.type) + "</p>" : "") +
+        '<nav class="g-nav" aria-label="' + esc(p.title) + ' 작업 바로가기">' + links + "</nav>" +
+      "</header>" +
+      p.parts.map(function (q, j) { return project(q, j); }).join("");
+  }
+  function render(p, i) { return p.parts ? group(p) : project(p, i); }
+
   var box = document.getElementById("projects");
-  if (box && window.PROJECTS) box.innerHTML = window.PROJECTS.map(project).join("");
+  var ALL = window.PROJECTS || [];
+  if (box && box.classList.contains("single")) {
+    // work.html?p=<slug> : one project, with links to the ones before and after
+    var slug = new URLSearchParams(location.search).get("p");
+    var i = 0;
+    for (var k = 0; k < ALL.length; k++) {
+      // an old address of a work that is now inside a bigger project still finds it
+      var inside = (ALL[k].parts || []).some(function (q) { return q.slug === slug; });
+      if (ALL[k].slug === slug || inside) i = k;
+    }
+    var p = ALL[i];
+    if (p) {
+      box.innerHTML = render(p, 0);
+      document.title = p.title + " · Kim Gaeun";
+      if (p.color) document.body.style.setProperty("--pc", p.color);
+      var back = document.querySelector(".back-home");
+      if (back) back.href = "./#" + encodeURIComponent(p.slug);
+      var pager = document.querySelector(".pager");
+      var link = function (j, cls, label) {
+        if (j < 0 || j >= ALL.length) return "";
+        return '<a class="' + cls + '" href="work.html?p=' + encodeURIComponent(ALL[j].slug) + '"><small>' + label + "</small>" + esc(ALL[j].title) + "</a>";
+      };
+      if (pager) pager.innerHTML = link(i - 1, "prev", "← 이전") + link(i + 1, "next", "다음 →");
+      var part = slug && slug !== p.slug && document.getElementById(slug);
+      if (part && !location.hash) part.scrollIntoView();
+    }
+  } else if (box) {
+    box.innerHTML = ALL.map(render).join("");
+  }
 
   // ---------- lightbox: arrows / keys / swipe move within one project
   var lb = document.querySelector(".lb");

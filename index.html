@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 검색 결과에 나오지 않게 하는 표시입니다. 검색에 나오게 하려면 이 줄을 지우세요(about.html에도 있음). -->
+<!-- 검색 결과에 나오지 않게 하는 표시입니다. 검색에 나오게 하려면 이 줄을 지우세요(about.html, work.html에도 있음). -->
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
 <title>Kim Gaeun · Illustration &amp; Animation</title>
 <meta name="description" content="2D Animation · Character Design · Illustration">
@@ -13,37 +13,20 @@
 <link rel="stylesheet" href="assets/style.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
-<body>
-<header class="site-head">
+<body class="home">
+<header class="site-head over">
   <a class="name" href="./">KIM GAEUN</a>
   <nav><a href="about.html">About</a></nav>
 </header>
 
-<main>
-  <section class="intro">
-    <h1>Illustration &amp; Animation</h1>
-    <p>2D Animation · Character Design · Illustration</p>
-  </section>
-
-  <!-- 프로젝트 블록은 data/projects.js 목록으로 채워집니다. -->
-  <div id="projects"></div>
-  <noscript><p class="noscript">작품을 보려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>
-</main>
-
-<footer class="site-foot">
-  <span>© 2026 Kim Gaeun</span>
-  <a href="about.html">About</a>
-</footer>
-
-<div class="lb" hidden>
-  <figure class="lb-fig"><img alt=""><figcaption></figcaption></figure>
-  <button class="lb-btn lb-prev" type="button" aria-label="이전 그림">‹</button>
-  <button class="lb-btn lb-next" type="button" aria-label="다음 그림">›</button>
-  <button class="lb-btn lb-close" type="button" aria-label="닫기">×</button>
-</div>
+<!-- 프로젝트마다 그림 한 장이 화면을 채웁니다. 스크롤·옆으로 밀기·방향키로 옆 프로젝트, 누르면 세부 페이지.
+     그림은 data/projects.js의 cover(넓은 화면)·coverPhone(세로 화면)으로 정합니다. -->
+<main class="reel" id="reel" aria-label="작품"></main>
+<noscript><p class="noscript">작품을 보려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>
 
 <script src="data/projects.js"></script>
 <script src="data/sizes.js"></script>
-<script src="assets/site.js"></script>
+<script src="assets/draw.js"></script>
+<script src="assets/home.js"></script>
 </body>
 </html>

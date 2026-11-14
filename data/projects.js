@@ -1,162 +1,179 @@
 // 사이트에 보이는 프로젝트 목록입니다. 위에서부터 순서대로 보입니다.
 // 그림 이름은 originals/<slug>/ 안의 파일 이름(확장자 빼고)과 같습니다.
+// cover는 첫 화면에 크게 보이는 그림, coverPhone은 세로 화면(휴대폰)용 그림입니다.
+// parts가 있으면 여러 작업을 한 프로젝트로 묶습니다(CeREELs). 각 part의 slug가 그림 폴더 이름입니다.
+// 다른 폴더의 그림은 "폴더/그림"처럼 씁니다.
+// intro가 있으면 첫 화면의 그 프로젝트 장을 종이 바탕 표지로 꾸밉니다(그림은 마우스를 움직인 만큼 그려지듯 나타남).
 // 추가 방법은 README.md를 보세요.
 window.PROJECTS = [
   {
-    "slug": "odie-seoul-inferno",
-    "kicker": "CeREELs IP · 2025 – 2026",
-    "title": "Odie in Seoul Inferno",
-    "desc": "단테 '신곡'의 지옥을 서울 직장인 오디의 하루로 옮긴 유튜브 숏츠 2D 컷아웃 애니메이션 시리즈입니다.",
-    "role": "Storyboard · Asset · Animating · Edit · Thumbnail · YouTube 관리",
+    "slug": "cereels",
+    "kicker": "CeREELs IP · 2025.03 – 2026.08",
+    "title": "CeREELs IP",
+    "desc": "청담미디어 CeREELs에서 한 작업을 모았습니다. 오디 IP(유튜브 숏츠 시리즈 Odie in Seoul Inferno, 중학생 오디 애니메이션 기획, 게임 Odie Odyssey)와 다른 CeREELs IP, 새 IP 작업입니다.",
     "type": "회사 작업 · 청담미디어 CeREELs",
-    "hero": "poster-main",
-    "sketches": [
-      "poster-sketch-01",
-      "poster-sketch-02",
-      "poster-sketch-03",
-      "poster-sketch-04",
-      "poster-sketch-05",
-      "poster-sketch-06",
-      "poster-rough"
-    ],
-    "gallery": [
-      "episode-01",
-      "episode-02",
-      "episode-03",
-      "episode-04",
-      "episode-05",
-      "character-01",
-      "character-02",
-      "character-03",
-      "character-04",
-      "character-05",
-      "character-06",
-      "character-07",
-      "character-08",
-      "character-09",
-      "character-10",
-      "character-11",
-      "character-12",
-      "background-01",
-      "background-02",
-      "background-03",
-      "background-04",
-      "background-05",
-      "background-06",
-      "background-07",
-      "background-08",
-      "background-09",
-      "background-10",
-      "background-11",
-      "background-12",
-      "boardgame-01",
-      "boardgame-02",
-      "boardgame-03",
-      "goods-01",
-      "goods-02",
-      "goods-03",
-      "goods-04"
+    "cover": "odie-seoul-inferno/background-02",
+    "coverPhone": "odie-seoul-inferno/poster-main",
+    "color": "#2f3f8f",
+    "intro": {
+      "words": "CeREELs IP 2025.03 – 2026.08",
+      "paper": "cereels/cover-paper",
+      "title": "cereels/cover-title",
+      "drawing": "cereels/cover-characters"
+    },
+    "parts": [
+      {
+        "slug": "odie-seoul-inferno",
+        "kicker": "CeREELs IP · 2025 – 2026",
+        "title": "Odie in Seoul Inferno",
+        "desc": "단테 '신곡'의 지옥을 서울 직장인 오디의 하루로 옮긴 유튜브 숏츠 2D 컷아웃 애니메이션 시리즈입니다.",
+        "role": "Storyboard · Asset · Animating · Edit · Thumbnail · YouTube 관리",
+        "hero": "poster-main",
+        "sketches": [
+          "poster-sketch-01",
+          "poster-sketch-02",
+          "poster-sketch-03",
+          "poster-sketch-04",
+          "poster-sketch-05",
+          "poster-sketch-06",
+          "poster-rough"
+        ],
+        "gallery": [
+          "episode-01",
+          "episode-02",
+          "episode-03",
+          "episode-04",
+          "episode-05",
+          "character-01",
+          "character-02",
+          "character-03",
+          "character-04",
+          "character-05",
+          "character-06",
+          "character-07",
+          "character-08",
+          "character-09",
+          "character-10",
+          "character-11",
+          "character-12",
+          "background-01",
+          "background-02",
+          "background-03",
+          "background-04",
+          "background-05",
+          "background-06",
+          "background-07",
+          "background-08",
+          "background-09",
+          "background-10",
+          "background-11",
+          "background-12",
+          "boardgame-01",
+          "boardgame-02",
+          "boardgame-03",
+          "goods-01",
+          "goods-02",
+          "goods-03",
+          "goods-04"
+        ]
+      },
+      {
+        "slug": "odie-middle-school",
+        "kicker": "CeREELs IP",
+        "title": "중학생 오디 애니메이션 기획",
+        "desc": "중학생 오디 애니메이션 기획 단계의 캐릭터 디자인, 배경 디자인 및 컨셉아트 작업입니다.",
+        "role": "캐릭터 디자인 · 배경 디자인 · 컨셉아트",
+        "hero": "concept-01",
+        "sketches": [
+          "sketch-01",
+          "turnaround-01",
+          "turnaround-02",
+          "expression-01"
+        ],
+        "gallery": [
+          "concept-02",
+          "concept-03",
+          "bg-odie-house",
+          "bg-classroom",
+          "bg-hallway",
+          "bg-classroom-layout",
+          "char-odie",
+          "char-taemi",
+          "char-sumin",
+          "char-eustis",
+          "char-heesu",
+          "acting-pose-01",
+          "acting-pose-02"
+        ]
+      },
+      {
+        "slug": "odie-odyssey",
+        "kicker": "CeREELs IP",
+        "title": "Odie Odyssey",
+        "desc": "Odie IP 게임 포스터 및 기타 디자인 작업입니다.",
+        "role": "게임 포스터 · 타이틀 디자인 · 배경 디자인",
+        "hero": "poster-final",
+        "sketches": [
+          "poster-thumbnails",
+          "stage0-sketch-01",
+          "stage0-sketch-02"
+        ],
+        "gallery": [
+          "poster-color-01",
+          "poster-color-02",
+          "poster-color-03",
+          "seoul-station",
+          "title-01",
+          "title-02",
+          "title-03",
+          "title-04",
+          "title-05",
+          "title-06"
+        ]
+      },
+      {
+        "slug": "cereels-other-ips",
+        "kicker": "CeREELs IP",
+        "title": "Supernova · 곰탕 · Ella Gator",
+        "desc": "CeREELs의 다른 IP 작품에서 맡은 에셋 선화 · 채색 · 배경 작업입니다.",
+        "role": "에셋 선화 · 채색 · 배경",
+        "hero": "ella-gator-01",
+        "sketches": [
+          "layout-sketch-01"
+        ],
+        "gallery": [
+          "asset-01",
+          "asset-02",
+          "asset-03",
+          "asset-04",
+          "asset-05",
+          "asset-06",
+          "asset-07",
+          "asset-08",
+          "asset-09",
+          "asset-10"
+        ]
+      },
+      {
+        "slug": "cereels-new-ip",
+        "kicker": "CeREELs IP",
+        "title": "New IP",
+        "desc": "신규 IP 기획 단계의 캐릭터 · 배경 시안입니다.",
+        "role": "캐릭터 · 배경 시안",
+        "hero": "concept-01",
+        "sketches": [
+          "concept-sketch-01",
+          "concept-sketch-02",
+          "concept-sketch-03",
+          "concept-sketch-04",
+          "concept-sketch-05",
+          "concept-sketch-06",
+          "concept-sketch-07",
+          "concept-sketch-08"
+        ],
+        "gallery": []
+      }
     ]
-  },
-  {
-    "slug": "odie-middle-school",
-    "kicker": "CeREELs IP",
-    "title": "중학생 오디 애니메이션 기획",
-    "desc": "중학생 오디 애니메이션 기획 단계의 캐릭터 디자인, 배경 디자인 및 컨셉아트 작업입니다.",
-    "role": "캐릭터 디자인 · 배경 디자인 · 컨셉아트",
-    "type": "회사 작업 · 청담미디어 CeREELs",
-    "hero": "concept-01",
-    "sketches": [
-      "sketch-01",
-      "turnaround-01",
-      "turnaround-02",
-      "expression-01"
-    ],
-    "gallery": [
-      "concept-02",
-      "concept-03",
-      "bg-odie-house",
-      "bg-classroom",
-      "bg-hallway",
-      "bg-classroom-layout",
-      "char-odie",
-      "char-taemi",
-      "char-sumin",
-      "char-eustis",
-      "char-heesu",
-      "acting-pose-01",
-      "acting-pose-02"
-    ]
-  },
-  {
-    "slug": "odie-odyssey",
-    "kicker": "CeREELs IP",
-    "title": "Odie Odyssey",
-    "desc": "Odie IP 게임 포스터 및 기타 디자인 작업입니다.",
-    "role": "게임 포스터 · 타이틀 디자인 · 배경 디자인",
-    "type": "회사 작업 · 청담미디어 CeREELs",
-    "hero": "poster-final",
-    "sketches": [
-      "poster-thumbnails",
-      "stage0-sketch-01",
-      "stage0-sketch-02"
-    ],
-    "gallery": [
-      "poster-color-01",
-      "poster-color-02",
-      "poster-color-03",
-      "seoul-station",
-      "title-01",
-      "title-02",
-      "title-03",
-      "title-04",
-      "title-05",
-      "title-06"
-    ]
-  },
-  {
-    "slug": "cereels-other-ips",
-    "kicker": "CeREELs IP",
-    "title": "Supernova · 곰탕 · Ella Gator",
-    "desc": "CeREELs의 다른 IP 작품에서 맡은 에셋 선화 · 채색 · 배경 작업입니다.",
-    "role": "에셋 선화 · 채색 · 배경",
-    "type": "회사 작업 · 청담미디어 CeREELs",
-    "hero": "ella-gator-01",
-    "sketches": [
-      "layout-sketch-01"
-    ],
-    "gallery": [
-      "asset-01",
-      "asset-02",
-      "asset-03",
-      "asset-04",
-      "asset-05",
-      "asset-06",
-      "asset-07",
-      "asset-08",
-      "asset-09",
-      "asset-10"
-    ]
-  },
-  {
-    "slug": "cereels-new-ip",
-    "kicker": "CeREELs IP",
-    "title": "New IP",
-    "desc": "신규 IP 기획 단계의 캐릭터 · 배경 시안입니다.",
-    "role": "캐릭터 · 배경 시안",
-    "type": "회사 작업 · 청담미디어 CeREELs",
-    "hero": "concept-01",
-    "sketches": [
-      "concept-sketch-01",
-      "concept-sketch-02",
-      "concept-sketch-03",
-      "concept-sketch-04",
-      "concept-sketch-05",
-      "concept-sketch-06",
-      "concept-sketch-07",
-      "concept-sketch-08"
-    ],
-    "gallery": []
   },
   {
     "slug": "circus-wonderland",
@@ -166,6 +183,8 @@ window.PROJECTS = [
     "role": "메인 이미지 · 캐릭터 디자인 · 홍보 애니메이션",
     "type": "의뢰 작업",
     "hero": "main-image",
+    "cover": "scene-giant",
+    "coverPhone": "main-image",
     "sketches": [
       "idea-sketch-01",
       "idea-sketch-02",
@@ -191,7 +210,8 @@ window.PROJECTS = [
       "animation-10",
       "animation-11",
       "animation-12"
-    ]
+    ],
+    "color": "#b9413a"
   },
   {
     "slug": "circus-world",
@@ -201,6 +221,7 @@ window.PROJECTS = [
     "role": "홍보 애니메이션 · 스토리보드 · 연출",
     "type": "의뢰 작업",
     "hero": "scene-circus",
+    "cover": "scene-circus",
     "sketches": [
       "storyboard",
       "sketch-01",
@@ -222,7 +243,8 @@ window.PROJECTS = [
       "animation-09",
       "animation-10",
       "animation-11"
-    ]
+    ],
+    "color": "#efcd78"
   },
   {
     "slug": "asteroid",
@@ -232,6 +254,7 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-moon",
+    "cover": "scene-moon",
     "sketches": [
       "character",
       "house"
@@ -248,7 +271,8 @@ window.PROJECTS = [
       "scene-09",
       "scene-10",
       "scene-11"
-    ]
+    ],
+    "color": "#3a3a46"
   },
   {
     "slug": "snow-goblin",
@@ -258,6 +282,7 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-forest",
+    "cover": "scene-forest",
     "sketches": [
       "goblin",
       "boy",
@@ -275,7 +300,8 @@ window.PROJECTS = [
       "scene-09",
       "scene-10",
       "scene-11"
-    ]
+    ],
+    "color": "#d9e1e8"
   },
   {
     "slug": "myoya-gokdong",
@@ -285,6 +311,7 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-cats",
+    "cover": "scene-cats",
     "sketches": [
       "characters",
       "lantern"
@@ -301,7 +328,8 @@ window.PROJECTS = [
       "scene-09",
       "scene-10",
       "scene-11"
-    ]
+    ],
+    "color": "#3b2e4a"
   },
   {
     "slug": "monggae-monggae",
@@ -311,6 +339,7 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-underwater",
+    "cover": "scene-underwater",
     "sketches": [
       "boy",
       "room"
@@ -327,7 +356,8 @@ window.PROJECTS = [
       "scene-09",
       "scene-10",
       "scene-11"
-    ]
+    ],
+    "color": "#2b8c9a"
   },
   {
     "slug": "character-design",
@@ -337,6 +367,7 @@ window.PROJECTS = [
     "role": "캐릭터 디자인 · 일러스트",
     "type": "개인 작업",
     "hero": "lineup-beach",
+    "cover": "lineup-beach",
     "sketches": [
       "sketch-01",
       "sketch-02",
@@ -348,7 +379,8 @@ window.PROJECTS = [
       "white-robe",
       "blue-cloaks",
       "circus-performers"
-    ]
+    ],
+    "color": "#7db7da"
   },
   {
     "slug": "ssukki-haeppugi",
@@ -358,6 +390,8 @@ window.PROJECTS = [
     "role": "캐릭터 디자인 · 응용 이미지 · 굿즈",
     "type": "개인 작업",
     "hero": "characters",
+    "cover": "characters",
+    "fit": "whole",
     "sketches": [
       "design-process-01",
       "design-process-02",
@@ -383,7 +417,8 @@ window.PROJECTS = [
       "goods-04",
       "goods-05",
       "goods-06"
-    ]
+    ],
+    "color": "#cde6c4"
   },
   {
     "slug": "drawing",
@@ -393,6 +428,7 @@ window.PROJECTS = [
     "role": "드로잉",
     "type": "개인 작업",
     "hero": "drawing-main",
+    "cover": "drawing-main",
     "sketches": [],
     "gallery": [
       "drawing-01",
@@ -403,6 +439,7 @@ window.PROJECTS = [
       "drawing-06",
       "drawing-07",
       "drawing-08"
-    ]
+    ],
+    "color": "#efe9df"
   }
 ];
