@@ -1,0 +1,170 @@
+/* Kim Gaeun portfolio — plain HTML/CSS/JS, no framework */
+:root {
+  --bg: #fbfaf7;
+  --ink: #1b1a19;
+  --muted: #7a746d;
+  --line: #e6e1d9;
+  --wrap: 1180px;
+  --gap: 18px;
+  --font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.75;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+
+/* ---------- header / footer */
+.site-head, .site-foot {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 28px 24px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.name, .site-head nav a {
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.site-head nav a { font-weight: 500; letter-spacing: .14em; }
+.site-head nav a:hover, .site-head nav a[aria-current] { text-decoration: underline; text-underline-offset: 6px; }
+.site-foot { margin-top: 120px; padding-bottom: 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
+.site-foot a { text-decoration: none; }
+
+main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+
+/* ---------- intro */
+.intro { padding: 72px 0 40px; }
+.intro h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4.2rem); font-weight: 700; line-height: 1.08; letter-spacing: -.02em; }
+.intro p { margin: 14px 0 0; color: var(--muted); font-size: 1.02rem; }
+.noscript { padding: 40px 0; color: var(--muted); }
+
+/* ---------- project block */
+.project { padding: 110px 0 0; }
+.project + .project { margin-top: 40px; border-top: 1px solid var(--line); }
+.p-info {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 20px 56px;
+  margin-bottom: 44px;
+}
+.p-kicker { margin: 0 0 8px; color: var(--muted); font-size: .82rem; letter-spacing: .08em; }
+.p-title { margin: 0; font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.p-desc { margin: 0; max-width: 40em; }
+.p-meta { margin: 22px 0 0; display: grid; gap: 6px; font-size: .9rem; }
+.p-meta div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; }
+.p-meta dt { color: var(--muted); }
+.p-meta dd { margin: 0; }
+
+.pic {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.pic img { transition: opacity .2s; }
+.pic:hover img, .pic:focus-visible img { opacity: .88; }
+.pic:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+.p-hero { margin: 0; }
+.p-hero img { margin: 0 auto; max-height: 86vh; width: auto; }
+
+.p-label { margin: 56px 0 14px; color: var(--muted); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
+.p-sketches .row { display: flex; flex-wrap: wrap; gap: var(--gap); align-items: flex-end; }
+.p-sketches .pic { width: auto; }
+.p-sketches img { height: 200px; width: auto; }
+
+/* grid: rows of even height that fill the width; pictures keep their shape */
+.p-grid { --rh: 230px; margin-top: 56px; display: flex; flex-wrap: wrap; gap: var(--gap); }
+.p-grid::after { content: ""; flex-grow: 999; }
+.p-grid .pic {
+  flex-grow: var(--ar);
+  flex-basis: calc(var(--ar) * var(--rh));
+  max-width: calc(var(--ar) * var(--rh) * 1.7);
+  width: auto;
+  min-width: 0;
+}
+.p-grid img { width: 100%; }
+
+/* ---------- about */
+.about-intro { padding: 72px 0 24px; }
+.about-intro h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.08; letter-spacing: -.02em; }
+.lead { margin: 22px 0 0; max-width: 34em; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.7; }
+.about-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; padding: 48px 0 0; }
+.about-cols h2 { margin: 0 0 10px; color: var(--muted); font-size: .8rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.about-cols ul { margin: 0; padding: 0; list-style: none; }
+.about-cols li { margin: 0 0 6px; }
+.reveal {
+  padding: .45em 1.1em;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.reveal:hover { background: var(--ink); color: var(--bg); }
+
+/* ---------- lightbox */
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(251, 250, 247, .97);
+}
+.lb[hidden] { display: none; }
+.lb-fig { margin: 0; max-width: 92vw; max-height: 90vh; display: flex; flex-direction: column; align-items: center; }
+.lb-fig img { max-width: 92vw; max-height: 84vh; width: auto; height: auto; }
+.lb-fig figcaption { margin-top: 12px; color: var(--muted); font-size: .85rem; }
+.lb-btn {
+  position: fixed;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 400 2.2rem/1 var(--font);
+  cursor: pointer;
+}
+.lb-btn:hover { opacity: .6; }
+.lb-prev { left: 8px; top: 50%; translate: 0 -50%; }
+.lb-next { right: 8px; top: 50%; translate: 0 -50%; }
+.lb-close { right: 10px; top: 10px; font-size: 2rem; }
+
+/* ---------- phones */
+@media (max-width: 760px) {
+  .site-head, .site-foot { padding: 20px 18px; }
+  main { padding: 0 18px; }
+  .intro { padding: 40px 0 20px; }
+  .project { padding-top: 72px; }
+  .p-info { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 28px; }
+  .p-hero img { max-height: none; width: 100%; }
+  .p-label { margin-top: 36px; }
+  .p-sketches .row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+  .p-sketches .pic { flex: 0 0 auto; scroll-snap-align: start; }
+  .p-sketches img { height: 150px; }
+  .p-grid { --rh: 120px; --gap: 10px; margin-top: 36px; }
+  .lb-prev, .lb-next { top: auto; bottom: 14px; translate: none; }
+  .lb-fig img { max-height: 76vh; }
+}
