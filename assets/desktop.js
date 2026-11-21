@@ -10,7 +10,7 @@
   var desk = document.getElementById('desk'), iconBox = document.getElementById('icons'), taskBox = document.getElementById('tasks');
   if (!desk || !iconBox || !taskBox || !projects.length) return;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var KEY = 'desk-v3';   // change the number when the layout changes, so old saved positions are ignored
+  var KEY = 'desk-v5';   // change the number when the layout changes, so old saved positions are ignored
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -50,14 +50,11 @@
     el.tabIndex = -1;
     el.setAttribute('aria-label', p.title);
     el.innerHTML =
-      '<header class="win-bar"><span class="mini" aria-hidden="true"></span><h2 class="win-title">' + esc(p.title) + '</h2>' +
-      '<span class="win-grip" aria-hidden="true"></span><div class="win-btns">' +
+      '<header class="win-bar"><h2 class="win-title">' + esc(p.title) + '</h2><div class="win-btns">' +
       '<button class="w-btn" type="button" data-act="min" aria-label="최소화">' + glyph('min') + '</button>' +
       '<button class="w-btn" type="button" data-act="max" aria-label="크게 보기">' + glyph('max') + '</button>' +
       '<button class="w-btn" type="button" data-act="close" aria-label="닫기">' + glyph('close') + '</button></div></header>' +
-      '<div class="win-body"><div class="win-grid">' + items + '</div></div>' +
-      '<footer class="win-status"><span>' + esc(p.kicker || '') + '</span>' +
-      '<a class="win-open" href="work.html?p=' + encodeURIComponent(p.slug) + '">Open ▸</a></footer>';
+      '<div class="win-body"><div class="win-grid">' + items + '</div></div>';
     desk.appendChild(el);
 
     var icon = document.createElement('button');
@@ -79,35 +76,46 @@
     taskBox.appendChild(task);
 
     wins[p.slug] = { slug: p.slug, el: el, icon: icon, task: task, open: true, min: false, max: false, fx: null, fy: null };
-    order.unshift(p.slug);   // the first project starts in front
+    order.unshift(p.slug);   // the first project starts in front, the last at the back
   });
 
   // ---------------------------------------------------------------- where each window starts
-  // The windows fill the whole desktop like tiles (covering the folder icons), with a small gap between them.
-  // Closing or minimising windows uncovers the folders.
-  // Each spot is [column, row, columns wide, rows tall], in projects.js order (CeREELs first and biggest).
-  // rows: relative height of each row. Change these to rearrange.
-  var GRIDS = {
-    wide: {     // computer screens
-      cols: 5, rows: [1, 1, 1], gap: 14,
-      spots: [[0, 0, 2, 2], [2, 0, 1, 1], [3, 0, 1, 1], [4, 0, 1, 1], [2, 1, 1, 1], [3, 1, 1, 1], [4, 1, 1, 1], [0, 2, 2, 1], [2, 2, 1, 1], [3, 2, 2, 1]]
-    },
-    medium: {   // small laptops, tablets on their side
-      cols: 4, rows: [1.2, 1, 1], gap: 12,
-      spots: [[0, 0, 2, 1], [2, 0, 1, 1], [3, 0, 1, 1], [0, 1, 1, 1], [1, 1, 1, 1], [2, 1, 1, 1], [3, 1, 1, 1], [0, 2, 2, 1], [2, 2, 1, 1], [3, 2, 1, 1]]
-    },
-    tall: {     // upright tablets
-      cols: 3, rows: [1.2, 1, 1, 1], gap: 10,
-      spots: [[0, 0, 2, 1], [2, 0, 1, 1], [0, 1, 1, 1], [1, 1, 1, 1], [2, 1, 1, 1], [0, 2, 1, 1], [1, 2, 1, 1], [0, 3, 2, 1], [2, 2, 1, 1], [2, 3, 1, 1]]
-    }
+  // The windows cover the whole desktop (and the folder icons) with a 12px margin at the screen edges.
+  // They are staggered like papers on a desk: different sizes, uneven gaps, and a few that overlap a
+  // neighbour a little at the edge. Projects higher in projects.js lie on top. Closing or minimising windows
+  // uncovers the folders. Each window is [left, top, width, height] in % of the area inside the margin,
+  // in projects.js order. Change these numbers to rearrange.
+  var LAYOUTS = {
+    wide: [     // computer screens
+      [0.8, 0, 36, 58],         // CeREELs (moved a little right by the user, 2026-11-21)
+      [37.5, 0, 21, 37],     // Circus in Wonderland
+      [57, 6.5, 23.5, 35.5], // Circus World
+      [82.5, 0, 17.5, 43],   // 소행성
+      [35, 39.5, 23, 27],    // 눈도깨비
+      [59.5, 44.5, 20.5, 29],// 묘야곡동
+      [81, 41, 19, 29.5],    // 몽개몽개
+      [0, 60.5, 35, 39.5],   // Character Design
+      [33.5, 68.5, 23.5, 31.5], // 쑤끼 · 해뿌기
+      [58.5, 72, 41.5, 28]   // 인체 · 동작 드로잉
+    ],
+    medium: [   // small laptops, tablets on their side
+      [0, 0, 49, 45], [50.5, 0, 24, 40], [73.5, 6.5, 26.5, 34.5], [0, 47.5, 23.5, 26],
+      [25, 43, 25, 26], [51.5, 38.5, 22, 33], [75, 43.5, 25, 29], [0, 77, 40, 23],
+      [38.5, 71.5, 24, 28.5], [64, 75, 36, 25]
+    ],
+    tall: [     // upright tablets
+      [0, 0, 63, 31], [64.5, 0, 35.5, 26], [61.5, 28, 38.5, 22], [0, 33, 30, 22],
+      [31.5, 35, 28.5, 19], [0, 57, 39, 20], [40.5, 52, 59.5, 23], [0, 79.5, 58, 20.5],
+      [59.5, 77, 19.5, 23], [80.5, 79, 19.5, 21]
+    ]
   };
   var D = { W: 0, H: 0 }, lay = {};
 
-  function evenGrid(n, ratio) {   // used only if the number of projects no longer matches the spots above
-    var cols = Math.max(1, Math.round(Math.sqrt(n * ratio / 1.4))), rows = Math.ceil(n / cols), g = { cols: cols, rows: [], gap: 12, spots: [] };
-    for (var r = 0; r < rows; r++) g.rows.push(1);
-    for (var i = 0; i < n; i++) g.spots.push([i % cols, Math.floor(i / cols), 1, 1]);
-    return g;
+  function evenGrid(n, ratio) {   // used only if the number of projects no longer matches the layouts above
+    var cols = Math.max(1, Math.round(Math.sqrt(n * ratio / 1.4))), rows = Math.ceil(n / cols), g = 1.5, out = [];
+    var w = (100 - g * (cols - 1)) / cols, h = (100 - g * 1.8 * (rows - 1)) / rows;
+    for (var i = 0; i < n; i++) out.push([(i % cols) * (w + g), Math.floor(i / cols) * (h + g * 1.8), w, h]);
+    return out;
   }
 
   function layout() {
@@ -128,18 +136,12 @@
       });
       return;
     }
-    var x0 = 12, y0 = 12;   // same margin on every side; the folder icons stay underneath
-    var RW = D.W - x0 - 12, RH = D.H - y0 - 12;
-    var g = RW / RH < .95 ? GRIDS.tall : RW >= 1150 ? GRIDS.wide : GRIDS.medium;
-    if (g.spots.length !== n) g = evenGrid(n, RW / RH);
-    var G = g.gap, colW = (RW - G * (g.cols - 1)) / g.cols;
-    var unit = (RH - G * (g.rows.length - 1)) / g.rows.reduce(function (a, b) { return a + b; }, 0);
-    var tops = [], y = y0;
-    g.rows.forEach(function (r) { tops.push(y); y += r * unit + G; });
+    var M = 12, RW = D.W - 2 * M, RH = D.H - 2 * M;   // same margin on every side
+    var set = RW / RH < .95 ? LAYOUTS.tall : RW >= 1150 ? LAYOUTS.wide : LAYOUTS.medium;
+    if (set.length !== n) set = evenGrid(n, RW / RH);
     projects.forEach(function (p, i) {
-      var s = g.spots[i], h = G * (s[3] - 1);
-      for (var k = s[1]; k < s[1] + s[3]; k++) h += g.rows[k] * unit;
-      lay[p.slug] = { x: x0 + s[0] * (colW + G), y: tops[s[1]], w: colW * s[2] + G * (s[2] - 1), h: h };
+      var s = set[i];
+      lay[p.slug] = { x: M + s[0] * RW / 100, y: M + s[1] * RH / 100, w: s[2] * RW / 100, h: s[3] * RH / 100 };
     });
   }
 

@@ -174,7 +174,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   --d-ink: #1d2340;
   --d-paper: #fbf6ea;
   --d-paper2: #ece3cf;
-  --d-sky: #52abdd;            /* the wallpaper's sky colour, fills the space above the picture */
+  --d-desk: #ece7de;           /* desktop colour: a pale, greyish beige, so the windows' pictures stand out */
   --d-folder: #f6c955;
   --d-folder2: #e3a83c;
   --d-accent: #f28c3c;
@@ -182,7 +182,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   --d-bar: 42px;               /* taskbar height */
   --d-font: Galmuri11, "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
   overflow: hidden;
-  background: var(--d-sky);
+  background: var(--d-desk);
   color: var(--d-ink);
   font-family: var(--d-font);
   font-size: 12px;
@@ -199,7 +199,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: var(--d-sky) url("wallpaper.webp") center bottom / max(100%, 100vh) auto no-repeat;
+  background: var(--d-desk);
 }
 .desk-page .noscript { position: absolute; left: 120px; top: 20px; margin: 0; padding: 8px 12px; background: var(--d-paper); border: 2px solid var(--d-ink); }
 
@@ -226,7 +226,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   padding: 6px 2px 0;
   border: 0;
   background: none;
-  color: #fff !important;
+  color: var(--d-ink) !important;
   text-align: center;
   cursor: default;
   -webkit-tap-highlight-color: transparent;
@@ -235,17 +235,15 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   max-width: 100%;
   padding: 0 3px;
   line-height: 15px;
-  text-shadow: 1px 0 var(--d-ink), -1px 0 var(--d-ink), 0 1px var(--d-ink), 0 -1px var(--d-ink),
-    1px 1px var(--d-ink), -1px -1px var(--d-ink), 1px -1px var(--d-ink), -1px 1px var(--d-ink);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.d-icon.sel .d-name { background: var(--d-ink); text-shadow: none; }
+.d-icon.sel .d-name { background: var(--d-ink); color: var(--d-paper); }
 .d-icon.sel .fold { filter: brightness(.86) saturate(1.2); }
 .d-icon:focus { outline: none; }
-.d-icon:focus-visible .d-name { outline: 1px dotted #fff; outline-offset: 1px; }
+.d-icon:focus-visible .d-name { outline: 1px dotted var(--d-ink); outline-offset: 1px; }
 
 .fold { position: relative; flex: none; width: 56px; height: 46px; }
 .fold::before {   /* back of the folder */
@@ -347,10 +345,10 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
 .win-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   flex: none;
   height: 30px;
-  padding: 0 4px 0 8px;
+  padding: 0 4px 0 10px;
   background: var(--d-paper2);
   border-bottom: 2px solid var(--d-ink);
   cursor: grab;
@@ -362,7 +360,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
 .win.is-max .win-bar { cursor: default; }
 .win.on .win-bar { background: var(--d-ink); color: var(--d-paper); }
 .win-title {
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-width: 0;
   margin: 0;
   font-size: 12px;
@@ -371,13 +369,6 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.win-grip {        /* the striped space between the title and the buttons */
-  flex: 1 1 20px;
-  min-width: 10px;
-  height: 10px;
-  background: repeating-linear-gradient(to bottom, currentColor 0 2px, transparent 2px 4px);
-  opacity: .8;
 }
 .win-btns { display: flex; gap: 3px; flex: none; }
 .w-btn {
@@ -401,7 +392,8 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  padding: 10px;
+  margin: 10px 0;      /* top and bottom: a margin that stays put while the pictures scroll */
+  padding: 0 10px;     /* left and right: the same width */
   container-type: inline-size;
   scrollbar-width: thin;
   scrollbar-color: var(--d-ink) var(--d-paper2);
@@ -440,28 +432,6 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
 }
 .w-pic:hover .w-label, .w-pic:focus-visible .w-label { opacity: 1; }
 
-.win-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex: none;
-  height: 30px;
-  padding: 0 5px 0 10px;
-  background: var(--d-paper2);
-  border-top: 2px solid var(--d-ink);
-}
-.win-status span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.win-open {
-  flex: none;
-  padding: 1px 9px;
-  border: 2px solid var(--d-ink);
-  background: var(--d-paper);
-  box-shadow: 2px 2px 0 var(--d-ink);
-  text-decoration: none;
-}
-.win-open:hover, .win-open:focus-visible { background: var(--d-folder); outline: none; }
-.win-open:active { translate: 2px 2px; box-shadow: none; }
 
 .win.pop { animation: win-pop .26s cubic-bezier(.2, .8, .3, 1.15) both; }
 .win.closing { animation: win-out .14s ease-in both; }
@@ -573,7 +543,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   background: var(--d-ink);
   color: var(--d-paper);
 }
-.sm-avatar { flex: none; width: 64px; height: 64px; border: 2px solid var(--d-paper); background: var(--d-sky); }
+.sm-avatar { flex: none; width: 64px; height: 64px; border: 2px solid var(--d-paper); background: var(--d-desk); }
 .sm-name { margin: 0; font-size: 24px; line-height: 1.1; letter-spacing: .04em; }
 .sm-role { margin: 6px 0 0; opacity: .85; }
 .sm-close { align-self: flex-start; margin-left: auto; }
