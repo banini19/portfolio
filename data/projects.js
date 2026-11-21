@@ -1,9 +1,9 @@
 // 사이트에 보이는 프로젝트 목록입니다. 위에서부터 순서대로 보입니다.
 // 그림 이름은 originals/<slug>/ 안의 파일 이름(확장자 빼고)과 같습니다.
-// cover는 첫 화면에 크게 보이는 그림, coverPhone은 세로 화면(휴대폰)용 그림입니다.
+// picks는 첫 화면(바탕화면) 창 안에 보이는 주요 그림입니다. 첫 그림은 폴더 아이콘에도 보입니다. 누르면 세부 페이지로 갑니다.
 // parts가 있으면 여러 작업을 한 프로젝트로 묶습니다(CeREELs). 각 part의 slug가 그림 폴더 이름입니다.
 // 다른 폴더의 그림은 "폴더/그림"처럼 씁니다.
-// intro가 있으면 첫 화면의 그 프로젝트 장을 종이 바탕 표지로 꾸밉니다(그림은 마우스를 움직인 만큼 그려지듯 나타남).
+// intro는 어썸피스 3쪽 종이 표지 그림입니다(지금은 화면에 쓰지 않음. assets/draw.js와 함께 보관).
 // 추가 방법은 README.md를 보세요.
 window.PROJECTS = [
   {
@@ -12,8 +12,23 @@ window.PROJECTS = [
     "title": "CeREELs IP",
     "desc": "청담미디어 CeREELs에서 한 작업을 모았습니다. 오디 IP(유튜브 숏츠 시리즈 Odie in Seoul Inferno, 중학생 오디 애니메이션 기획, 게임 Odie Odyssey)와 다른 CeREELs IP, 새 IP 작업입니다.",
     "type": "회사 작업 · 청담미디어 CeREELs",
-    "cover": "odie-seoul-inferno/background-02",
-    "coverPhone": "odie-seoul-inferno/poster-main",
+    "picks": [
+      "odie-seoul-inferno/poster-main",
+      "odie-seoul-inferno/background-02",
+      "odie-seoul-inferno/episode-01",
+      "odie-seoul-inferno/episode-04",
+      "odie-seoul-inferno/background-01",
+      "odie-middle-school/concept-01",
+      "odie-middle-school/concept-03",
+      "odie-middle-school/bg-hallway",
+      "odie-odyssey/poster-final",
+      "odie-odyssey/seoul-station",
+      "odie-odyssey/title-03",
+      "cereels-other-ips/ella-gator-01",
+      "cereels-other-ips/asset-04",
+      "cereels-other-ips/asset-09",
+      "cereels-new-ip/concept-01"
+    ],
     "color": "#2f3f8f",
     "intro": {
       "words": "CeREELs IP 2025.03 – 2026.08",
@@ -183,8 +198,12 @@ window.PROJECTS = [
     "role": "메인 이미지 · 캐릭터 디자인 · 홍보 애니메이션",
     "type": "의뢰 작업",
     "hero": "main-image",
-    "cover": "scene-giant",
-    "coverPhone": "main-image",
+    "picks": [
+      "main-image",
+      "scene-giant",
+      "animation-02",
+      "animation-12"
+    ],
     "sketches": [
       "idea-sketch-01",
       "idea-sketch-02",
@@ -221,7 +240,12 @@ window.PROJECTS = [
     "role": "홍보 애니메이션 · 스토리보드 · 연출",
     "type": "의뢰 작업",
     "hero": "scene-circus",
-    "cover": "scene-circus",
+    "picks": [
+      "scene-circus",
+      "animation-07",
+      "animation-11",
+      "animation-09"
+    ],
     "sketches": [
       "storyboard",
       "sketch-01",
@@ -254,7 +278,12 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-moon",
-    "cover": "scene-moon",
+    "picks": [
+      "scene-moon",
+      "scene-04",
+      "scene-09",
+      "scene-11"
+    ],
     "sketches": [
       "character",
       "house"
@@ -282,7 +311,12 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-forest",
-    "cover": "scene-forest",
+    "picks": [
+      "scene-forest",
+      "scene-04",
+      "scene-09",
+      "scene-03"
+    ],
     "sketches": [
       "goblin",
       "boy",
@@ -311,7 +345,12 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-cats",
-    "cover": "scene-cats",
+    "picks": [
+      "scene-cats",
+      "scene-04",
+      "scene-09",
+      "scene-11"
+    ],
     "sketches": [
       "characters",
       "lantern"
@@ -339,7 +378,12 @@ window.PROJECTS = [
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
     "hero": "scene-underwater",
-    "cover": "scene-underwater",
+    "picks": [
+      "scene-underwater",
+      "scene-02",
+      "scene-05",
+      "scene-10"
+    ],
     "sketches": [
       "boy",
       "room"
@@ -367,7 +411,13 @@ window.PROJECTS = [
     "role": "캐릭터 디자인 · 일러스트",
     "type": "개인 작업",
     "hero": "lineup-beach",
-    "cover": "lineup-beach",
+    "picks": [
+      "lineup-beach",
+      "circus-performers",
+      "blue-cloaks",
+      "white-robe",
+      "chef-sheet"
+    ],
     "sketches": [
       "sketch-01",
       "sketch-02",
@@ -390,8 +440,11 @@ window.PROJECTS = [
     "role": "캐릭터 디자인 · 응용 이미지 · 굿즈",
     "type": "개인 작업",
     "hero": "characters",
-    "cover": "characters",
-    "fit": "whole",
+    "picks": [
+      "characters",
+      "emoticon-05",
+      "goods-02"
+    ],
     "sketches": [
       "design-process-01",
       "design-process-02",
@@ -428,7 +481,11 @@ window.PROJECTS = [
     "role": "드로잉",
     "type": "개인 작업",
     "hero": "drawing-main",
-    "cover": "drawing-main",
+    "picks": [
+      "drawing-main",
+      "drawing-05",
+      "drawing-02"
+    ],
     "sketches": [],
     "gallery": [
       "drawing-01",
