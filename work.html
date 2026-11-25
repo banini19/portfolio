@@ -4,40 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
-<title>Work · Kim Gaeun</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css">
+<title>Kim Gaeun</title>
+<!-- 예전 프로젝트 세부 페이지 주소입니다. 2026-11-22부터 세부 화면은 첫 화면 하나뿐이라(카드를 누르면 그 자리에서 커짐),
+     예전 링크(work.html?p=<slug>)는 첫 화면의 같은 작품(./#<slug>)으로 넘겨 줍니다. 카드가 없는 작품은 첫 화면으로 갑니다. -->
+<script>
+  (function () {
+    var p = '';
+    try { p = new URLSearchParams(location.search).get('p') || decodeURIComponent(location.hash.slice(1)); } catch (_) {}
+    location.replace('./' + (p ? '#' + encodeURIComponent(p) : ''));
+  })();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=./"></noscript>
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
-<body class="work-page">
-<!-- 프로젝트 하나의 세부 페이지입니다. 주소 끝의 ?p=<slug> 로 어떤 프로젝트인지 정합니다. -->
-<div class="band"></div>
-<header class="site-head">
-  <a class="name" href="./">KIM GAEUN</a>
-  <nav><a class="back-home" href="./">← Works</a><a href="about.html">About</a></nav>
-</header>
-
-<main>
-  <div id="projects" class="single"></div>
-  <nav class="pager" aria-label="다른 프로젝트"></nav>
-</main>
-
-<footer class="site-foot">
-  <span>© 2026 Kim Gaeun</span>
-  <a href="about.html">About</a>
-</footer>
-
-<div class="lb" hidden>
-  <figure class="lb-fig"><img alt=""><figcaption></figcaption></figure>
-  <button class="lb-btn lb-prev" type="button" aria-label="이전 그림">‹</button>
-  <button class="lb-btn lb-next" type="button" aria-label="다음 그림">›</button>
-  <button class="lb-btn lb-close" type="button" aria-label="닫기">×</button>
-</div>
-
-<script src="data/projects.js"></script>
-<script src="data/sizes.js"></script>
-<script src="assets/site.js"></script>
+<body>
+<p><a href="./">Kim Gaeun · Works</a></p>
 </body>
 </html>

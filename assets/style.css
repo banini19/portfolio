@@ -1,3 +1,11 @@
+/* project names on the project pages: 그리운X국한박 사랑스러운 (TypeE·Griun, free for any use; the file must not be changed, so it is
+   served as the original TTF — https://www.griun.co.kr/fonts/hangeulsarangseureoun). Missing marks (·) fall back. */
+@font-face {
+  font-family: "Griun Sarang";
+  src: url("fonts/GriunXHangeul_SarangSeuReoUn-Rg.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
 /* Kim Gaeun portfolio — plain HTML/CSS/JS, no framework */
 :root {
   --bg: #fbfaf7;
@@ -65,7 +73,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
   margin-bottom: 44px;
 }
 .p-kicker { margin: 0 0 8px; color: var(--muted); font-size: .82rem; letter-spacing: .08em; }
-.p-title { margin: 0; font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.p-title { margin: 0; font-family: "Griun Sarang", "Bricolage Grotesque", "Noto Sans KR", sans-serif; font-size: clamp(2rem, 4.2vw, 3rem); font-weight: 400; line-height: 1.15; letter-spacing: 0; }
 .p-desc { margin: 0; max-width: 40em; }
 .p-meta { margin: 22px 0 0; display: grid; gap: 6px; font-size: .9rem; }
 .p-meta div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 12px; }
@@ -86,6 +94,10 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
 
 .p-hero { margin: 0; }
 .p-hero img { margin: 0 auto; max-height: 86vh; width: auto; }
+.p-videos { display: grid; gap: var(--gap); }
+.p-hero + .p-videos { margin-top: var(--gap); }
+.p-video { margin: 0; }
+.p-video video { display: block; width: 100%; height: auto; aspect-ratio: var(--ar); background: #000; }
 
 .p-label { margin: 56px 0 14px; color: var(--muted); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
 .p-sketches .row { display: flex; flex-wrap: wrap; gap: var(--gap); align-items: flex-end; }
@@ -623,7 +635,7 @@ main { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
 
 /* ================================================================ project detail page */
 .g-head { padding: 72px 0 0; }
-.g-title { margin: 6px 0 0; font-size: clamp(2.6rem, 8vw, 5.2rem); font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+.g-title { margin: 6px 0 0; font-family: "Griun Sarang", "Bricolage Grotesque", "Noto Sans KR", sans-serif; font-size: clamp(2.8rem, 8.6vw, 5.6rem); font-weight: 400; line-height: 1; letter-spacing: 0; }
 .g-desc { max-width: 40em; margin: 22px 0 0; font-size: 1.02rem; }
 .g-type { margin: 8px 0 0; color: var(--muted); font-size: .85rem; }
 .g-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }

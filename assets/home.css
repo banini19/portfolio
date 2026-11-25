@@ -1,0 +1,326 @@
+/* Front page: works as rounded cards (draft C "벤토 카드", chosen 2026-11-22). Cards are placed in assets/home.js. */
+/* project names inside the detail view: 그리운X국한박 사랑스러운 (TypeE·Griun, free for any use; the file must not be changed, so it is
+   served as the original TTF — https://www.griun.co.kr/fonts/hangeulsarangseureoun). Missing marks (·) fall back. */
+@font-face {
+  font-family: "Griun Sarang";
+  src: url("fonts/GriunXHangeul_SarangSeuReoUn-Rg.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img, video { display: block; max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: inherit; text-decoration: none; }
+svg { width: 1em; height: 1em; }
+
+.home {
+  --bg: #ffffff; --card: #f4f2ee; --ink: #1d1b18; --mute: #8a847a;   /* white page (user, 11/22); cards a faint warm grey */
+  --r: clamp(18px, 1.8vw, 28px); --g: clamp(8px, .9vw, 14px);
+  container-type: inline-size;
+  padding: 0 var(--g) var(--g);
+  background: var(--bg); color: var(--ink);
+  font-family: "Bricolage Grotesque", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* category colours */
+.c-animation { --cc: #ff5a36; }
+.c-game { --cc: #8a63ff; }
+.c-character { --cc: #19b37f; }
+.c-drawing { --cc: #3b82f6; }
+
+/* floating menu, top centre */
+.nav {
+  position: fixed; top: 12px; left: 50%; z-index: 20;
+  display: flex; align-items: center; gap: 4px;
+  padding: 6px; border-radius: 999px; transform: translateX(-50%);   /* only Works and About (11/23 user) */
+  background: rgba(251, 250, 247, .84); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .08), 0 0 0 1px rgba(0, 0, 0, .04);
+  white-space: nowrap;
+}
+.pill { padding: 9px 17px; border-radius: 999px; font-size: 14px; font-weight: 600; transition: background .2s; }
+.pill:hover { background: #eeebe5; }
+
+.title { margin: 0; padding: 14px 8px 18px; font-size: clamp(48px, 6.6vw, 112px); font-weight: 800; line-height: .86; letter-spacing: -.05em; }
+.title sup { margin-left: 6px; font-size: .28em; letter-spacing: 0; vertical-align: top; color: var(--mute); }
+
+.grid {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: calc(((100cqw - 3 * var(--g)) / 4 * .62 - var(--g)) / 2); grid-auto-flow: dense; gap: var(--g);   /* half-rows */
+}
+.card { position: relative; display: block; min-width: 0; overflow: hidden; border-radius: var(--r); background: var(--card); }
+
+/* ---------- works */
+.work { grid-column: span var(--w); grid-row: span var(--h); background: #d8d2c7; scroll-margin: 90px; transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s; }
+.work > img, .work > video { width: 100%; height: 100%; object-fit: cover; transition: transform 1s cubic-bezier(.2, .7, .2, 1); }
+.work:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(29, 27, 24, .16); }
+.work:hover > img, .work:hover > video { transform: scale(1.045); }
+.work:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.work.nolink { cursor: default; }
+.cat { position: absolute; left: 14px; top: 14px; display: flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; background: rgba(251, 250, 247, .93); font-size: 12.5px; font-weight: 600; }
+.cat i { width: 7px; height: 7px; border-radius: 50%; background: var(--cc); }
+.go { position: absolute; right: 14px; top: 14px; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 18px; opacity: 0; transform: scale(.6) rotate(-45deg); transition: opacity .3s, transform .4s cubic-bezier(.2, .7, .2, 1); }
+.work:hover .go, .work:focus-visible .go { opacity: 1; transform: none; }
+.go svg { fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.label { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.label b { padding: 8px 14px; border-radius: 14px; background: rgba(251, 250, 247, .95); font-size: 15px; font-weight: 700; }
+.label em { padding: 5px 10px; border-radius: 999px; background: rgba(29, 27, 24, .72); color: #fff; font-size: 12px; font-style: normal; }
+/* two works in one card: which one is playing */
+.pips { display: flex; gap: 4px; padding: 7px 8px; border-radius: 999px; background: rgba(29, 27, 24, .72); }
+.pips i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, .4); transition: background .3s, width .3s; }
+.pips i.on { width: 14px; border-radius: 3px; background: #fff; }
+.noscript { padding: 20px 8px; }
+/* the category, name and year show only while the pointer is on the card (phones without a pointer keep them) */
+@media (hover: hover) {
+  .cat, .label { opacity: 0; transition: opacity .3s; }
+  .cat { transform: translateY(-4px); transition: opacity .3s, transform .4s cubic-bezier(.2, .7, .2, 1); }
+  .label { transform: translateY(4px); transition: opacity .3s, transform .4s cubic-bezier(.2, .7, .2, 1); }
+  .work:hover .cat, .work:hover .label, .work:focus-visible .cat, .work:focus-visible .label { opacity: 1; transform: none; }
+}
+
+/* ---------- phones: two columns, the menu above the title */
+@media (max-width: 760px) {
+  .pill { padding: 8px 11px; font-size: 13px; }
+  .title { padding-top: 76px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: calc((100cqw - var(--g)) / 2 * .9); }
+  .work { grid-column: span 1; grid-row: span 1; }
+  .work.wide { grid-column: span 2; }
+  .label b { padding: 6px 10px; font-size: 13px; }
+  .cat { left: 10px; top: 10px; padding: 5px 10px; font-size: 11.5px; }
+  .label { left: 10px; right: 10px; bottom: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work, .work > img, .work > video, .go, .cat, .label { transition: none; }
+}
+
+/* ---------- a card opened (home.js): the card turns over while it grows into a window over the works (they stay
+   behind, dimmed); its back is the window with the details. Click outside the window, ×, Esc or back to turn it back. */
+html { scrollbar-gutter: stable; }
+html.d-open { overflow: hidden; }
+.work.away { transform: none; transition: none; background: var(--card); }   /* its place stays empty while it is open */
+.work.away .cat, .work.away .go, .work.away .label { visibility: hidden; }
+.detail { position: fixed; inset: 0; z-index: 50; }
+.d-bg { position: absolute; inset: 0; background: rgba(24, 22, 19, .45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); cursor: zoom-out; }
+.d-panel {
+  position: absolute; inset: 28px; overflow: hidden; visibility: hidden;   /* home.js gives it the card's shape (not on phones) */
+  border-radius: 28px; background: var(--bg); box-shadow: 0 30px 90px rgba(0, 0, 0, .28);
+  container-type: size;   /* the name and big pictures follow the window's size */
+}
+.detail.ready .d-panel, .detail.leaving .d-panel { visibility: visible; }   /* only once the card has turned */
+.d-scroll { position: absolute; inset: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable both-edges; }   /* the name stays centred as on the card's back */
+/* the turning card: front = the card's picture / clip, back = the empty window (same colour and corners) */
+.d-flip { position: fixed; z-index: 1; perspective: 2200px; pointer-events: none; }
+.d-spin { position: absolute; inset: 0; border-radius: inherit; transform-style: preserve-3d; }
+.d-front, .d-back {
+  position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden; box-shadow: 0 30px 90px rgba(0, 0, 0, .28);
+}
+.d-front { background: #d8d2c7; }
+.d-back { background: var(--bg); transform: rotateY(180deg); container-type: size; }
+.d-back .d-name { margin: 0 var(--gut, 0px); }
+.d-front > video, .d-front > img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+.d-close {
+  position: absolute; top: calc(var(--g) + 14px); right: calc(var(--g) + 14px); z-index: 3;
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(251, 250, 247, .92); color: var(--ink); font-size: 20px; cursor: pointer;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 20px rgba(0, 0, 0, .14);
+  opacity: 0; transform: scale(.7); transition: opacity .3s, transform .4s cubic-bezier(.2, .7, .2, 1);
+}
+.d-close svg { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; }
+.d-close:hover { background: var(--ink); color: #fff; }
+.detail.ready .d-close { opacity: 1; transform: none; }
+.d-body {
+  padding: 0 var(--g) 90px;
+  opacity: 0; transform: translateY(18px); transition: opacity .45s, transform .6s cubic-bezier(.2, .7, .2, 1);
+}
+.detail.ready .d-body { opacity: 1; transform: none; }
+/* the project's name at the top of the back (also on the turning card's back, so it shows while the card turns) */
+.d-name {
+  margin: 0; padding: clamp(28px, 7cqh, 80px) 76px clamp(16px, 3.4cqh, 36px);
+  color: var(--ink); font-family: "Griun Sarang", "Bricolage Grotesque", "Noto Sans KR", sans-serif; font-size: clamp(40px, min(7.5cqw, 13cqh), 104px); font-weight: 400; line-height: 1; letter-spacing: 0; text-align: center;
+}
+.detail.leaving .d-body, .detail.leaving .d-close { transition-duration: .15s; }
+/* black bar under it: subtitle | what was done */
+.d-bar {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 24px;
+  min-height: 64px; padding: 14px clamp(18px, 2vw, 30px); border-radius: var(--r); background: var(--ink); color: #f4f1ea;
+}
+.d-tag { font-size: clamp(18px, 1.7vw, 26px); font-weight: 700; letter-spacing: -.01em; }
+.d-did { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: clamp(14px, 1.15vw, 17px); font-weight: 500; }
+.d-did i { font-style: normal; color: rgba(244, 241, 234, .4); }
+/* under the bar the details keep a reading width (1120px) in the middle of wide screens */
+.d-body { --side: clamp(6px, 1.6vw, 26px); --inset: max(var(--side), calc((100% - 1120px) / 2)); }
+.d-switch, .d-about, .d-sec, .d-videos, .d-main { margin-left: var(--inset); margin-right: var(--inset); }
+.d-switch { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.d-switch button { padding: 8px 16px 7px; border: 0; border-radius: 999px; background: var(--card); font: 400 17px "Griun Sarang", "Bricolage Grotesque", "Noto Sans KR", sans-serif; color: var(--ink); cursor: pointer; }
+.d-switch button.on { background: var(--ink); color: #fff; }
+.d-about { margin-top: 26px; }
+.d-desc { margin: 0; max-width: 40em; font: 400 16px/1.75 "Noto Sans KR", sans-serif; }
+.d-type { margin: 8px 0 0; color: var(--mute); font-size: 13px; }
+.d-label { margin: 56px 0 16px; color: var(--mute); font-size: 14px; font-weight: 600; letter-spacing: .02em; }
+/* Ver 1 → Ver 2 → Ver 3 */
+.d-vers { display: flex; align-items: center; gap: clamp(8px, 1.2vw, 18px); }
+.d-vers figure { flex: 1 1 0; min-width: 0; margin: 0; }
+.d-vers figcaption { margin-bottom: 8px; font-size: 15px; font-weight: 700; }
+.d-vers .d-pic { aspect-ratio: 2.05 / 1; }   /* the same frame for every version so they line up */
+.d-vers .d-pic img { height: 100%; object-fit: cover; }
+.d-arrow { flex: none; width: clamp(20px, 2.2vw, 32px); height: auto; margin-top: 26px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* turntables side by side at one scale (--u = screen px per video px), feet on one line */
+.d-sec { container-type: inline-size; }
+.d-turn {
+  --tg: clamp(6px, 1vw, 16px);
+  --u: min(.5px, calc((100cqw - var(--n) * var(--tg)) / var(--sum)));
+  display: flex; align-items: flex-end; justify-content: center; gap: var(--tg);
+}
+.d-turn video { flex: none; width: calc(var(--w) * var(--u)); height: calc(var(--h) * var(--u)); background: #fff; }
+/* dress-up: Odie on the left (drag or arrows to turn him), the choices on the right */
+.d-dress { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 24px clamp(28px, 4vw, 56px); align-items: center; }
+.dr-stage { position: relative; padding: 22px 30px; border-radius: var(--r); background: var(--card); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.dr-stage.drag { cursor: grabbing; }
+.dr-stage:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.dr-pic { position: relative; width: 100%; max-height: 72cqh; margin: 0 auto; }
+.dr-l { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; -webkit-user-drag: none; }
+.dr-turn {
+  position: absolute; top: 50%; display: grid; place-items: center; width: 38px; height: 38px; margin-top: -19px; padding: 0;
+  border: 0; border-radius: 50%; background: #fff; color: var(--ink); cursor: pointer; box-shadow: 0 2px 10px rgba(29, 27, 24, .1);
+}
+.dr-turn.left { left: 10px; }
+.dr-turn.right { right: 10px; }
+.dr-turn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.dr-turn:hover { background: var(--ink); color: #fff; }
+/* the choices: a picture tile each, one row per kind; the chosen one gets a mint background */
+.dr-opts { display: grid; gap: 14px; }
+.dr-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.dr-item { --t: 72px; width: var(--t); height: var(--t); padding: 7px; border: 0; border-radius: 18px; background: var(--card); cursor: pointer; transition: background .2s; }
+.dr-item img { display: block; width: 100%; height: 100%; border-radius: 11px; object-fit: contain; pointer-events: none; }
+.dr-item:hover { background: #e8e4dc; }
+.dr-item[aria-pressed="true"] { background: #a9e0d4; }
+.dr-item:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+/* process (Metaverse): one big picture and the rest beside it */
+.d-process { display: grid; grid-template-columns: 2fr 1fr; gap: var(--g); }
+.d-process .d-pic { position: relative; }
+.d-process .d-pic:first-child { grid-row: span 2; }   /* its height sets the rows; the others fill them */
+.d-process .d-pic:not(:first-child) img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.d-videos { display: grid; gap: var(--g); margin-top: 32px; }
+.d-videos video { display: block; width: 100%; height: auto; border-radius: var(--r); background: #000; }
+.d-main { margin-top: 32px; }
+.d-pic { display: block; width: 100%; padding: 0; border: 0; border-radius: 16px; overflow: hidden; background: #ddd7cc; cursor: zoom-in; }
+.d-pic img { display: block; width: 100%; height: auto; transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+.d-pic:hover img { transform: scale(1.03); }
+.d-main .d-pic img { max-height: 72cqh; object-fit: contain; background: var(--card); }
+.d-sketches { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.d-sketches .d-pic { flex: 0 0 auto; width: auto; border-radius: 10px; }
+.d-sketches img { width: auto; height: 180px; }
+/* rows of pictures that share one height (--rh); each picture is as wide as its shape needs, the last row is not stretched */
+.d-rows { --rh: 150px; display: flex; flex-wrap: wrap; gap: 10px; }
+.d-rows::after { content: ""; flex: 1000 1 0; }
+.d-rows .d-pic { flex: var(--ar) 1 calc(var(--ar) * var(--rh)); width: auto; min-width: 0; }
+.d-rows .d-pic, .d-cols .d-pic, .d-sketches .d-pic { border-radius: 10px; background: var(--card); }
+.d-cols { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 10px; align-items: start; max-width: 880px; }
+/* story: a line from the film, then 기획 의도 and 줄거리 side by side */
+.d-logline { margin: 0 0 22px; max-width: 30em; font: 700 clamp(20px, 2.1vw, 28px)/1.4 "Noto Sans KR", sans-serif; letter-spacing: -.02em; }
+.d-story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 20px clamp(24px, 4vw, 64px); }
+.d-story > div:only-child { grid-column: 1 / -1; }
+.d-story h3, .d-step h3 { margin: 0 0 10px; font-size: 15px; font-weight: 700; }
+.d-story p { margin: 0 0 .8em; max-width: 40em; font: 400 16px/1.75 "Noto Sans KR", sans-serif; }
+/* the whole film */
+.d-film { aspect-ratio: 16 / 9; border-radius: var(--r); overflow: hidden; background: #000; }
+.d-film iframe { display: block; width: 100%; height: 100%; border: 0; }
+/* process steps: a small title over each step's pictures */
+.d-step + .d-step { margin-top: 30px; }
+.lbx { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 3vmin; background: rgba(20, 19, 17, .92); cursor: zoom-out; }
+.lbx img { max-width: 100%; max-height: 94vh; object-fit: contain; }
+@media (max-width: 760px) {
+  .d-bar { padding: 12px 16px; }
+  .d-label { margin-top: 44px; }
+  .d-vers { flex-direction: column; align-items: stretch; }
+  .d-vers figure { flex: none; }
+  .d-arrow { align-self: center; margin: 0; transform: rotate(90deg); }
+  .d-turn { --u: .3px; justify-content: flex-start; overflow-x: auto; padding-bottom: 6px; }
+  .d-process { grid-template-columns: 1fr; }
+  .d-process .d-pic:first-child { grid-row: auto; }
+  .d-process .d-pic:not(:first-child) { aspect-ratio: 16 / 9; }
+  .d-sketches img { height: 120px; }
+  .d-rows { --rh: 90px; gap: 6px; }   /* two 16:9 stills side by side on a phone */
+  .d-cols { gap: 6px; }
+  .d-story { grid-template-columns: 1fr; }
+  .d-dress { grid-template-columns: 1fr; }
+  .dr-stage { width: min(100%, 320px); margin: 0 auto; padding: 16px 26px; }
+  .dr-opts { gap: 10px; justify-items: center; }
+  .dr-row { gap: 6px; justify-content: center; }
+  .dr-item { --t: 58px; padding: 5px; border-radius: 15px; }
+  .dr-item img { border-radius: 9px; }
+  .d-panel { inset: 12px 8px 0; border-radius: 22px 22px 0 0; }   /* a sheet from the bottom on a phone */
+  .d-close { width: 42px; height: 42px; }
+  .d-name { padding: 38px 58px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .d-body, .d-close { transition: none; }
+}
+
+/* ---------- two screens: the works, then About me. On wide screens the page moves one screen at a time
+   (home.js: a slow, eased move). On the way, the works sink back a little and fade while About slides over them
+   like a sheet with rounded top corners. --p goes 0 (works) → 1 (About). */
+#works, .about { min-height: 100vh; min-height: 100svh; }
+.about {
+  position: relative; z-index: 1;
+  margin: 0 calc(-1 * var(--g)); padding: 0 var(--g) var(--g);
+  background: var(--bg);
+}
+@media (min-width: 761px) {
+  #works > .title, #works > .grid {
+    transform: translateY(calc(var(--p, 0) * 22vh)) scale(calc(1 - var(--p, 0) * .07));
+    transform-origin: 50% 0;
+    opacity: calc(1 - var(--p, 0) * .75);
+  }
+  .about {
+    border-radius: calc((1 - var(--p, 0)) * 36px) calc((1 - var(--p, 0)) * 36px) 0 0;
+    box-shadow: 0 -24px 60px rgba(29, 27, 24, calc(var(--p, 0) * (1 - var(--p, 0)) * .5));   /* only while moving */
+  }
+}
+.about .card { display: flex; flex-direction: column; padding: clamp(16px, 1.6vw, 24px); }
+.about h3 { display: flex; justify-content: space-between; margin: 0 0 12px; font-size: 16px; font-weight: 700; }
+.about h3 span { color: var(--mute); font-weight: 500; }
+.intro { grid-column: span 2; grid-row: span 4; justify-content: space-between; padding: clamp(20px, 2.2vw, 32px); background: var(--ink); color: #f4f1ea; }
+.who { display: flex; align-items: center; gap: 12px; }
+.who img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; background: #f4f1ea; }
+.who p { display: flex; flex-direction: column; gap: 1px; margin: 0; }
+.who b { font-size: 16px; }
+.who span { color: #a8a298; font-size: 13px; }
+.big { margin: 0; font-size: clamp(40px, 5vw, 84px); font-weight: 800; line-height: .94; letter-spacing: -.04em; }
+.big em { font-style: normal; color: #ffab85; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.chips li { padding: 6px 12px; border-radius: 999px; background: #ffffff; font-size: 13px; font-weight: 500; }
+.chips li.plus { border: 1.5px dashed #c7c0b4; background: none; color: #6f6a61; }
+.chips.light li { padding: 8px 16px; background: rgba(244, 241, 234, .12); color: #f4f1ea; font-size: 15px; }
+.timeline { grid-column: span 2; grid-row: span 4; }
+.timeline ol { display: flex; flex-direction: column; flex: 1; justify-content: space-around; margin: 0; padding: 0; list-style: none; }
+.timeline li { display: grid; grid-template-columns: minmax(120px, .9fr) minmax(0, 1.4fr) minmax(0, 1.2fr); align-items: baseline; gap: 12px; padding: 9px 0; border-top: 1px solid rgba(29, 27, 24, .1); }
+.timeline .when { color: var(--mute); font-size: 13px; font-variant-numeric: tabular-nums; }
+.timeline b { font-size: clamp(15px, 1.25vw, 18px); }
+.timeline .what { color: var(--mute); font-size: 13px; text-align: right; }
+.skills { grid-column: span 2; grid-row: span 2; }
+.skills .chips { gap: 5px; overflow: hidden; }
+.skills .chips li { padding: 5px 11px; font-size: 13px; }
+.also { grid-column: span 1; grid-row: span 2; justify-content: space-between; border: 2px dashed #c7c0b4; background: transparent; }
+.also .chips li { font-size: 14px; padding: 7px 13px; }
+.contact { grid-column: span 1; grid-row: span 2; justify-content: space-between; background: #ff6b3d; }
+.contact h3 { font-size: clamp(30px, 3vw, 46px); font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.reveal, .mail { align-self: flex-start; padding: 11px 18px; border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: 600 14px "Bricolage Grotesque", "Noto Sans KR", sans-serif; cursor: pointer; }
+.reveal:hover, .mail:hover { background: #fff; color: var(--ink); }
+/* the About cards come up one after another */
+.rise .about .card { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .8s cubic-bezier(.2, .7, .2, 1); }
+.rise .about.in .card { opacity: 1; transform: none; }
+.rise .about.in .card:nth-child(2) { transition-delay: .08s; }
+.rise .about.in .card:nth-child(3) { transition-delay: .16s; }
+.rise .about.in .card:nth-child(4) { transition-delay: .22s; }
+.rise .about.in .card:nth-child(5) { transition-delay: .28s; }
+@media (max-width: 760px) {
+  .intro, .timeline, .skills { grid-column: span 2; grid-row: auto; min-height: 0; }
+  .about .grid { grid-auto-rows: auto; }
+  .intro { gap: 28px; }
+  .timeline li { grid-template-columns: 1fr; gap: 2px; }
+  .timeline .what { text-align: left; }
+  .also, .contact { grid-row: auto; gap: 18px; }
+}

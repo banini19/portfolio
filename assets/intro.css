@@ -1,0 +1,119 @@
+/* Front page (draft, 2026-11-22): a reel of the films, full screen and on a loop (opens with 6 s of 소행성),
+   and below it a gallery of every project's main pictures. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+.intro-page {
+  background: #fbfaf7;
+  color: #1b1a19;
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.intro-page.locked { height: 100%; overflow: hidden; }   /* no scrolling while the opening plays */
+img { display: block; max-width: 100%; height: auto; }
+
+/* ---------- the reel */
+.hero { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: #000; }
+/* the reel fills the screen; what happens is in the middle, so trimming the edges on other screen shapes is fine */
+.hero video, .intro-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+.intro-still[hidden] { display: none; }
+
+/* name and About: white over the reel, dark once the page has scrolled down to the light gallery */
+.intro-head {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 26px 30px;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .35);
+  opacity: 0;
+  transition: opacity 1.4s ease, color .3s, text-shadow .3s, background .3s, padding .3s;
+  pointer-events: none;
+}
+.intro-head a { color: inherit; font-size: 12px; font-weight: 700; letter-spacing: .18em; text-decoration: none; }
+.intro-head a + a { font-weight: 500; letter-spacing: .14em; }
+.intro-head a:hover { text-decoration: underline; text-underline-offset: 6px; }
+.done .intro-head { opacity: 1; pointer-events: auto; }
+.below .intro-head { color: #1b1a19; text-shadow: none; }
+
+/* the arrow inviting a scroll */
+.down {
+  position: absolute;
+  left: 50%;
+  bottom: max(22px, 4vh);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-left: -28px;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease .5s;
+}
+.down svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; animation: bob 1.8s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(6px); } }
+.done .down { opacity: .9; pointer-events: auto; }
+.done.scrolled .down { opacity: 0; pointer-events: none; transition-delay: 0s; }
+
+/* ---------- works wall: big tiles packed close on a 6-column grid (sizes in works.js), no words until pointed at */
+.works {
+  --gap: 4px;
+  --u: calc((100vw - 8px - 5 * var(--gap)) / 6 * .42);   /* half-row: a 3 x 4 tile is about 16:9 */
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-auto-rows: var(--u);
+  grid-auto-flow: dense;
+  gap: var(--gap);
+  padding: 4px;
+}
+.tile {
+  position: relative;
+  display: block;
+  grid-column: span var(--w);
+  grid-row: span var(--h);
+  overflow: hidden;
+  background: #ddd6ca;
+  scroll-margin: 80px;
+}
+.tile img, .tile video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2, .6, .2, 1), filter .4s; }
+.tile-info {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 36px 18px 14px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .62));
+  color: #fff;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.tile-info b { font-size: 15px; font-weight: 700; }
+.tile-info span { font-size: 12px; opacity: .86; }
+.tile:hover img, .tile:hover video, .tile:focus-visible img, .tile:focus-visible video { transform: scale(1.03); }
+.tile:hover .tile-info, .tile:focus-visible .tile-info { opacity: 1; }
+.tile:focus-visible { outline: 3px solid #1b1a19; outline-offset: -3px; }
+.noscript { padding: 40px 28px; }
+
+/* over the wall the name gets a light strip behind it */
+.below .intro-head { background: rgba(251, 250, 247, .92); padding-top: 16px; padding-bottom: 14px; }
+
+@media (max-width: 699px) {
+  .intro-head { padding: 20px 18px; }
+  .below .intro-head { padding: 14px 18px 12px; }
+  /* phones: one tile per row at its own shape, name always shown */
+  .works { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; }
+  .tile { grid-column: auto; grid-row: auto; aspect-ratio: var(--ar); }
+  .tile-info { opacity: 1; padding: 28px 14px 10px; }
+  .tile-info b { font-size: 13px; }
+  .tile-info span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-head, .down { transition: none; }
+  .down svg { animation: none; }
+  .tile img, .tile video, .tile-info { transition: none; }
+}

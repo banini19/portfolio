@@ -9,6 +9,7 @@
   }
 
   var SIZES = window.IMG_SIZES || {};
+  var REDUCE = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // one picture: small copy on the page, big copy in the lightbox
   function pic(slug, name, alt, eager) {
@@ -32,6 +33,15 @@
         (meta ? '<dl class="p-meta">' + meta + "</dl>" : "") +
       "</div></div>";
     if (p.hero) html += '<figure class="p-hero">' + pic(p.slug, p.hero, p.title, i < 2) + "</figure>";
+    // footage (games, recordings): plays by itself without sound, with the usual controls
+    if (p.videos && p.videos.length) {
+      html += '<div class="p-videos">' + p.videos.map(function (v) {
+        var s = v.size || [16, 9];
+        return '<figure class="p-video" style="--ar:' + (s[0] / s[1]).toFixed(4) + '"><video src="' + esc(v.src) + '"' +
+          (v.poster ? ' poster="' + esc(v.poster) + '"' : "") + ' controls muted loop playsinline preload="metadata"' +
+          (REDUCE ? "" : " autoplay") + ' aria-label="' + esc(p.title) + ' 영상"></video></figure>';
+      }).join("") + "</div>";
+    }
     if (p.sketches && p.sketches.length) {
       html += '<div class="p-sketches"><p class="p-label">Sketches</p><div class="row">' +
         p.sketches.map(function (n) { return pic(p.slug, n, p.title + " 스케치"); }).join("") + "</div></div>";

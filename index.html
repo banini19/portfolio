@@ -7,45 +7,49 @@
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
 <title>Kim Gaeun · Illustration &amp; Animation</title>
 <meta name="description" content="2D Animation · Character Design · Illustration">
-<!-- 픽셀 글꼴 갈무리(Galmuri, SIL Open Font License) -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@2.40.3/dist/galmuri.css">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/home.css">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 </head>
-<body class="desk-page">
+<body class="home" id="top">
+<!-- 첫 화면: 작품 카드가 바로 보입니다(크기가 다른 둥근 카드, assets/home.js의 CARDS).
+     애니메이션·게임 카드는 짧은 영상이 소리 없이 반복 재생됩니다(video/tiles, tools/make_tile_clips.py).
+     카드 위 분류·제목·연도는 마우스를 올렸을 때만 보입니다(마우스가 없는 휴대폰은 늘 보임).
+     아래로 내리면 한 화면씩 넘어가듯 About me 화면이 나옵니다(넓은 화면). -->
+<header class="nav">
+  <a class="pill" href="#works" data-go="works">Works</a>
+  <a class="pill" href="#about" data-go="about">About</a>
+</header>
 
-<!-- 바탕화면: 프로젝트마다 폴더 아이콘과 창이 하나씩 있습니다. 창 안의 그림은 data/projects.js의 picks입니다. -->
-<main class="desk" id="desk" aria-label="작품 바탕화면">
-  <nav class="d-icons" id="icons" aria-label="프로젝트 폴더"></nav>
+<main id="works">
+  <h1 class="title">Portfolio</h1>
+  <div class="grid" id="cards" aria-label="작품"></div>
   <noscript><p class="noscript">작품을 보려면 브라우저에서 JavaScript를 켜 주세요.</p></noscript>
 </main>
 
-<!-- 시작 버튼을 누르면 올라오는 About 창. 글은 about.html에서 가져옵니다. -->
-<section class="start-menu" id="start-menu" aria-label="About me" hidden>
-  <header class="sm-head">
-    <img class="sm-avatar" src="assets/avatar.webp" width="96" height="96" alt="">
-    <div>
-      <p class="sm-name">KIM GAEUN</p>
-      <p class="sm-role">2D Animation · Character Design · Illustration</p>
-    </div>
-    <button class="w-btn sm-close" type="button" data-act="close-start" aria-label="닫기"><svg viewBox="0 0 8 8" aria-hidden="true"><path d="M0 0h2v1H0zM6 0h2v1H6zM1 1h2v1H1zM5 1h2v1H5zM2 2h4v1H2zM3 3h2v2H3zM2 5h4v1H2zM1 6h2v1H1zM5 6h2v1H5zM0 7h2v1H0zM6 7h2v1H6z"/></svg></button>
-  </header>
-  <div class="sm-body" id="sm-body"><p><a href="about.html">About 페이지 열기</a></p></div>
-  <footer class="sm-foot"><a class="sm-more" href="about.html">about.html ▸</a></footer>
+<!-- About me: 소개 · 연도별 작업(projects.js에서) · 하는 일(projects.js의 role) · Also · 연락처 -->
+<section class="about" id="about" aria-label="About me">
+  <h2 class="title">About</h2>
+  <div class="grid">
+    <article class="card intro">
+      <div class="who"><img src="assets/avatar.webp" alt=""><p><b>Kim Gaeun</b><span>2D Animation · Character Design · Illustration</span></p></div>
+      <p class="big">Animation,<br><em>characters</em><br>&amp; game art.</p>
+      <ul class="chips light"><li>기획</li><li>제작</li><li>편집</li></ul>
+    </article>
+    <article class="card timeline"><h3>Timeline</h3><ol id="timeline"></ol></article>
+    <article class="card skills"><h3>What I do <span id="n-roles"></span></h3><ul class="chips" id="skills"></ul></article>
+    <article class="card also"><h3>Also</h3><ul class="chips"><li class="plus">+ 3D</li><li class="plus">+ 메타버스</li><li class="plus">+ AI 바이브코딩</li></ul></article>
+    <article class="card contact" id="contact"><h3>Contact</h3>
+      <!-- 이메일은 자동 수집을 줄이려고 버튼을 눌러야 보이게 했습니다(about.html과 같은 주소). -->
+      <button class="reveal" type="button" data-user="kgaeun369" data-domain="naver.com">이메일 보기</button>
+    </article>
+  </div>
 </section>
-
-<footer class="taskbar">
-  <button class="start" id="start" type="button" aria-expanded="false" aria-controls="start-menu">
-    <svg class="pencil" viewBox="0 0 14 14" aria-hidden="true"><path fill="#1d2340" d="M3 8h1v1h-1zM4 7h1v1h-1zM5 6h1v1h-1zM5 10h1v1h-1zM6 5h1v1h-1zM6 9h1v1h-1zM7 4h1v1h-1zM7 8h1v1h-1zM8 3h1v1h-1zM8 7h1v1h-1zM9 2h1v1h-1zM9 6h1v1h-1zM10 1h1v1h-1zM10 5h1v1h-1zM11 0h1v1h-1zM11 1h1v1h-1zM11 4h1v1h-1zM12 1h1v1h-1zM12 2h1v1h-1zM12 3h1v1h-1zM13 2h1v1h-1zM1 12h1v1h-1z"/><path fill="#f3d9a6" d="M2 10h2v2h-2z"/><path fill="#f6c955" d="M3 9h1v1h-1zM4 8h1v3h-1zM5 7h1v3h-1zM6 6h1v3h-1zM7 5h1v3h-1zM8 4h1v3h-1zM9 4h1v2h-1z"/><path fill="#9aa3b8" d="M9 3h2v1h-2zM10 4h1v1h-1z"/><path fill="#ec6a5c" d="M10 2h2v1h-2zM11 3h1v1h-1z"/></svg>
-    <span>KIM GAEUN</span>
-  </button>
-  <div class="tasks" id="tasks" role="toolbar" aria-label="열린 창"></div>
-  <div class="tray"><time id="clock"></time></div>
-</footer>
 
 <script src="data/projects.js"></script>
 <script src="data/sizes.js"></script>
-<script src="assets/desktop.js"></script>
+<script src="assets/home.js"></script>
 </body>
 </html>
