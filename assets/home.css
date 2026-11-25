@@ -48,6 +48,10 @@ svg { width: 1em; height: 1em; }
 .grid {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-auto-rows: calc(((100cqw - 3 * var(--g)) / 4 * .62 - var(--g)) / 2); grid-auto-flow: dense; gap: var(--g);   /* half-rows */
+  /* wide windows: the rows get flatter so each screen (big title + 6 half-rows + bottom gap) still fits the window height;
+     otherwise home.js turns off the one-wheel-turn paging (11/25: a 1920×950 window was 60–70px too tall) */
+  grid-auto-rows: min(calc(((100cqw - 3 * var(--g)) / 4 * .62 - var(--g)) / 2),
+                      calc((100vh - 32px - .86 * clamp(48px, 6.6vw, 112px) - 6 * var(--g)) / 6));
 }
 .card { position: relative; display: block; min-width: 0; overflow: hidden; border-radius: var(--r); background: var(--card); }
 
