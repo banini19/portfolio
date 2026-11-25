@@ -4,8 +4,13 @@
 // parts가 있으면 여러 작업을 한 프로젝트로 묶습니다(CeREELs). 각 part의 slug가 그림 폴더 이름입니다.
 // 다른 폴더의 그림은 "폴더/그림"처럼 씁니다.
 // intro는 어썸피스 3쪽 종이 표지 그림입니다(지금은 화면에 쓰지 않음. assets/draw.js와 함께 보관).
-// videos가 있으면 세부 페이지에 영상이 들어갑니다(tools/make_page_videos.py가 만든 video/<slug>/). 대표 그림 hero는 없어도 됩니다.
+// videos가 있으면 세부 페이지에 영상이 들어갑니다(tools/make_page_videos.py가 만든 video/<slug>/). 대표 그림 hero는 없어도 됩니다. hero에 그림 여러 장을 목록으로 적으면 같은 높이로 나란히 놓입니다(적은 순서대로 왼쪽부터).
+// nameBg는 세부 화면 맨 위 제목 뒤에 깔리는 그림 이름(있으면 제목과 검은 띠 글씨가 그림 위에 흰색으로, 띠는 없어짐).
+// nameBgAt은 그림의 어느 부분이 보일지(가로% 세로%, 없으면 50% 60%), nameBgDim은 밝은 그림을 어둡게 할 정도(0~1).
 // tagline은 세부 화면 검은 띠 왼쪽 글(없으면 kicker). versions(Ver 1 → 2 → 3 그림), turntables(tools/make_turntables.py), process(작업 과정 그림)는 있을 때만 보입니다.
+// channel은 세부 화면 맨 위의 유튜브 채널 그림(pic, 누르면 url로). Odie in Seoul Inferno.
+// poster는 세부 화면의 Poster 칸: final(완성 포스터, 왼쪽)과 sketches(스케치들, 오른쪽에 줄 맞춰 작은 갤러리).
+// times는 같은 자리에서 시간에 따라 빛이 바뀌는 게임 화면(세부 화면 맨 위 "Time of day", 2×2): pic 그림 이름, time 그림 위 시각.
 // dressup은 Metaverse 옷 입혀보기(tools/make_dressup.py가 출력하는 줄; 그림은 site/dressup/odie/, 고르는 단추 그림은 --icons로 site/dressup/odie-icons/).
 // 노션 포트폴리오에서 옮긴 것(세부 화면): logline(작품 속 한 줄), intent(기획 의도), synopsis(줄거리 문단), film(유튜브 영상 id → Film),
 // steps(Process 단계: title, pics. 그림은 같은 높이의 줄로 놓임. cols를 주면 그 칸 수의 격자 — 위아래 짝을 맞출 때).
@@ -15,9 +20,16 @@ window.PROJECTS = [
     "slug": "metaverse",
     "kicker": "Metaverse · 2026",
     "title": "Metaverse",
+    "nameBg": "title-bg",
     "tagline": "70–80s Seoul",
     "desc": "",
     "role": "기획 · 디자인 · 3D · AI 활용",
+    "times": [
+      { "pic": "time-0800", "time": "08:00" },
+      { "pic": "time-1830", "time": "18:30" },
+      { "pic": "time-1950", "time": "19:50" },
+      { "pic": "time-2300", "time": "23:00" }
+    ],
     "versions": ["v1", "v2", "v3"],
     "turntables": [
       { "src": "video/metaverse/turntable/bluejacket.mp4", "poster": "video/metaverse/turntable/bluejacket.webp", "size": [364, 734] },
@@ -30,7 +42,7 @@ window.PROJECTS = [
       { "src": "video/metaverse/turntable/bird.mp4", "poster": "video/metaverse/turntable/bird.webp", "size": [126, 96] }
     ],
     "dressup": {"path": "dressup/odie/", "icons": "dressup/odie-icons/", "angles": 8, "size": [448, 838], "hair": ["기본 단발", "낮은 양갈래", "옆가르마 숏컷", "머리띠 올림머리"], "outfit": ["기본 티셔츠", "바다 세일러복", "놀이터 멜빵바지", "개나리 비옷"], "shoes": ["기본 갈색 신발", "찍찍이 운동화", "노란 장화"], "eyes": ["기본 동그란 눈", "가늘게 뜬 눈", "웃는 눈"], "mouth": ["기본 웃는 입", "일자 입", "시무룩한 입"]},
-    "process": ["process-01", "process-02", "process-03"],
+    "process": ["process-02", "process-03"],
     "videos": [
       { "src": "video/metaverse/alley.mp4", "poster": "video/metaverse/alley.webp", "size": [1500, 758] },
       { "src": "video/metaverse/rooftop.mp4", "poster": "video/metaverse/rooftop.webp", "size": [1500, 734] }
@@ -72,24 +84,25 @@ window.PROJECTS = [
         "slug": "odie-seoul-inferno",
         "kicker": "CeREELs IP · 2025 – 2026",
         "title": "Odie in Seoul Inferno",
+        "nameBg": "background-01",
+        "nameBgAt": "50% 55%",
+        "nameBgDim": 0.25,
         "desc": "단테 '신곡'의 지옥을 서울 직장인 오디의 하루로 옮긴 유튜브 숏츠 2D 컷아웃 애니메이션 시리즈입니다.",
-        "role": "Storyboard · Asset · Animating · Edit · Thumbnail · YouTube 관리",
-        "hero": "poster-main",
-        "sketches": [
-          "poster-sketch-01",
-          "poster-sketch-02",
-          "poster-sketch-03",
-          "poster-sketch-04",
-          "poster-sketch-05",
-          "poster-sketch-06",
-          "poster-rough"
-        ],
+        "role": "기획 · 제작",
+        "channel": { "pic": "youtube-channel", "url": "https://www.youtube.com/@SeoulInferno.CeREELs", "name": "Seoul Inferno.CeREELs" },
+        "poster": {
+          "final": "poster-main",
+          "sketches": [
+            "poster-sketch-01",
+            "poster-sketch-02",
+            "poster-sketch-03",
+            "poster-sketch-04",
+            "poster-sketch-05",
+            "poster-sketch-06",
+            "poster-rough"
+          ]
+        },
         "gallery": [
-          "episode-01",
-          "episode-02",
-          "episode-03",
-          "episode-04",
-          "episode-05",
           "character-01",
           "character-02",
           "character-03",
@@ -120,7 +133,20 @@ window.PROJECTS = [
           "goods-01",
           "goods-02",
           "goods-03",
-          "goods-04"
+          "goods-04",
+          "odie-middle-school/turnaround-02",
+          "odie-middle-school/turnaround-01",
+          "odie-middle-school/acting-poses",
+          "odie-middle-school/char-lineup",
+          "odie-middle-school/expression-01",
+          "odie-middle-school/bg-classroom-layout",
+          "odie-middle-school/concept-01",
+          "odie-middle-school/bg-hallway",
+          "odie-middle-school/bg-classroom",
+          "odie-middle-school/bg-odie-house",
+          "odie-middle-school/concept-03",
+          "odie-middle-school/concept-02",
+          "odie-odyssey/poster-final"
         ]
       },
       {
@@ -225,11 +251,14 @@ window.PROJECTS = [
     "slug": "circus-wonderland",
     "kicker": "Circus Cabaret · 2023",
     "title": "Circus in Wonderland",
+    "nameBg": "animation-08",
+    "nameBgAt": "50% 50%",
+    "nameBgDim": 0.25,
     "desc": "'이상한 나라의 앨리스' 콘셉트의 서커스 페스티벌 홍보 애니메이션과 메인 이미지입니다. 거인이 서커스 랜드를 발견한 모습을 요청받아, 거인을 페스티벌을 찾아오는 사람들로 해석해 평범하고 중성적으로 디자인했습니다. 서커스 랜드의 요정들은 줄무늬 패턴과 별 모양을 참고했습니다.",
     "role": "메인 이미지 · 캐릭터 디자인 · 홍보 애니메이션",
     "type": "의뢰 작업",
     "film": "eQUTc1C3Kyg",
-    "hero": "main-image",
+    "hero": ["main-image-inside", "main-image"],
     "picks": [
       "main-image",
       "scene-giant",
@@ -246,7 +275,6 @@ window.PROJECTS = [
       "sketch-03"
     ],
     "gallery": [
-      "main-image-inside",
       "banner-in-use",
       "scene-giant",
       "animation-01",
@@ -268,6 +296,9 @@ window.PROJECTS = [
     "slug": "circus-world",
     "kicker": "Circus Cabaret · 2022",
     "title": "Circus World",
+    "nameBg": "animation-11",
+    "nameBgAt": "50% 35%",
+    "nameBgDim": 0.3,
     "desc": "지루해 하던 사람들이 서커스 세계에 빨려 들어가는 서커스 페스티벌 홍보 애니메이션입니다. 지루한 일상은 흑백으로, 서커스 세계에 들어서며 몸에 색이 채워지도록 연출했습니다.",
     "role": "홍보 애니메이션 · 스토리보드 · 연출",
     "type": "의뢰 작업",
@@ -306,6 +337,8 @@ window.PROJECTS = [
     "slug": "asteroid",
     "kicker": "Short Film · 2024",
     "title": "소행성",
+    "nameBg": "scene-moon",
+    "nameBgAt": "50% 32%",
     "desc": "개인 단편 애니메이션입니다. (2024.11 – 12)",
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
@@ -346,6 +379,8 @@ window.PROJECTS = [
     "slug": "snow-goblin",
     "kicker": "Short Film · 2021",
     "title": "눈도깨비",
+    "nameBg": "scene-08",
+    "nameBgAt": "50% 50%",
     "desc": "개인 단편 애니메이션입니다. (2021.09 – 12)",
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
@@ -385,6 +420,8 @@ window.PROJECTS = [
     "slug": "myoya-gokdong",
     "kicker": "Short Film · 2019",
     "title": "묘야곡동",
+    "nameBg": "scene-06",
+    "nameBgAt": "50% 50%",
     "desc": "개인 단편 애니메이션입니다. (2019.04 – 06)",
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
@@ -421,6 +458,8 @@ window.PROJECTS = [
     "slug": "monggae-monggae",
     "kicker": "Short Film · 2018 – 2019",
     "title": "몽개몽개",
+    "nameBg": "scene-08",
+    "nameBgAt": "50% 35%",
     "desc": "개인 단편 애니메이션입니다. (2018.11 – 2019.01)",
     "role": "개인 작업 · 2D 애니메이션",
     "type": "개인 작업",
@@ -465,22 +504,16 @@ window.PROJECTS = [
     "hero": "lineup-beach",
     "picks": [
       "lineup-beach",
-      "circus-performers",
-      "blue-cloaks",
-      "white-robe",
-      "chef-sheet"
-    ],
-    "sketches": [
-      "sketch-01",
-      "sketch-02",
-      "sketch-03"
-    ],
-    "gallery": [
       "chef-sheet",
       "chef-scene",
-      "white-robe",
       "blue-cloaks",
-      "circus-performers"
+      "forest-tree",
+      "camper-van",
+      "sixties-kids",
+      "yunbok-diary-01",
+      "yunbok-diary-02",
+      "goblin-kid-01",
+      "goblin-kid-02"
     ],
     "color": "#7db7da"
   },
