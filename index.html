@@ -36,34 +36,27 @@
      "열기"는 구글 드라이브에 "링크가 있는 사용자 보기"로 올린 이력서 PDF(바탕화면 취업\김가은_이력서_자기소개서_1-2쪽.pdf)를 새 창으로 엽니다.
      PDF는 공개 저장소에 남지 않게 사이트에 올리지 않습니다(11/26 사용자 결정). 드라이브에서 공유를 끄거나 파일을 바꾸면 사이트를
      다시 올리지 않아도 바로 반영됩니다. 다른 파일로 바꾸려면 아래 href의 드라이브 링크만 바꿉니다.
-     넓은 화면은 그 아래에 슬라이드와 같은 자리·크기(16:9 판, 위아래 빈 부분은 잘라 냄), 좁은 화면은 위에서 아래로 차례로 놓입니다.
+     아래는 글을 줄인 깔끔한 화면(11/26 사용자 요청): 왼쪽 얼굴 손그림과 이름, 오른쪽 Experience(마지막 경력 + 학력) · Tool(프로그램 아이콘 +
+     할 수 있는 작업 #태그) · Contact. 넓은 화면은 두 칸, 휴대폰은 위에서 아래로.
      그림: assets/about/ (원본은 originals/about/), 글꼴: 학교안심 은하수 R(OFL), 이름은 그리운X국한박 사랑스러운 -->
 <section class="about" id="about" aria-label="About me">
   <h2 class="title">About Me <span class="yr">이력서</span><a class="cv-open" href="https://drive.google.com/file/d/1wEvxvTp4pbRzm6j-t6vD1tQ0nnaScIDE/view?usp=sharing" target="_blank" rel="noopener" aria-label="이력서 PDF 새 창으로 열기">열기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg></a></h2>
-  <div class="ab-view">
-  <div class="ab-slide">
+  <div class="ab-body">
     <figure class="ab-me ab-in">
       <img src="assets/about/face.webp" width="680" height="658" alt="김가은 얼굴 손그림">
       <figcaption>KIM GAEUN</figcaption>
     </figure>
     <div class="ab-info">
-      <section class="ab-edu ab-in">
-        <h3>학력</h3>
-        <p>청강문화산업대학교 애니메이션스쿨(심화) 졸업</p>
-      </section>
-      <section class="ab-career ab-in">
-        <h3>경력</h3>
+      <section class="ab-exp ab-in">
+        <h3>Experience</h3>
         <ul>
-          <li>개인 단편 애니메이션 &lt;몽개몽개&gt;, &lt;묘야곡동&gt;, &lt;눈도깨비&gt;, &lt;소행성&gt; 제작</li>
-          <li>2022년, 2023년 서커스 페스티벌 홍보 애니메이션 및 2023년 메인 이미지 제작</li>
-          <li>사회적 가치 숏폼 영상 공모전 수상작 &lt;인간 캔 - 지속 가능한, 살코기&gt; 참여</li>
-          <li>&lt;집 위의 난파선&gt; 러프 애니메이션 파트 일부 참여</li>
-          <li>2025.03 ~ 2026.08 청담미디어 CeREELs 애니메이션팀</li>
+          <li><span>2025.03 – 2026.08</span>청담미디어 CeREELs 애니메이션팀</li>
+          <li><span>2025.02</span>청강문화산업대학교 애니메이션스쿨(심화) 졸업</li>
         </ul>
       </section>
-      <section class="ab-skill ab-in">
-        <h3>스킬</h3>
-        <ul>
+      <section class="ab-tool ab-in">
+        <h3>Tool</h3>
+        <ul class="ab-icons">
           <li><img src="assets/about/skill-clip-studio.webp" width="256" height="256" alt="Clip Studio"></li>
           <li><img src="assets/about/skill-photoshop.webp" width="256" height="256" alt="Photoshop"></li>
           <li><img src="assets/about/skill-after-effects.webp" width="256" height="256" alt="After Effects"></li>
@@ -71,14 +64,18 @@
           <li><img src="assets/about/skill-illustrator.webp" width="256" height="256" alt="Illustrator"></li>
           <li><img src="assets/about/skill-storyboard-pro.webp" width="256" height="256" alt="Storyboard Pro"></li>
         </ul>
+        <!-- 할 수 있는 작업: 예전 What I do·Also에 있던 것들에서 골랐습니다. 넣고 빼려면 li 한 줄씩 -->
+        <ul class="ab-tags">
+          <li>#애니메이션</li><li>#컷아웃 애니메이션</li><li>#캐릭터 디자인</li><li>#배경 디자인</li><li>#스토리보드</li><li>#컨셉아트</li>
+          <li>#포스터 디자인</li><li>#영상 편집</li><li>#3D</li><li>#메타버스</li>
+        </ul>
       </section>
       <section class="ab-contact ab-in" id="contact">
-        <h3>연락처</h3>
+        <h3>Contact</h3>
         <!-- 이메일은 자동 수집을 줄이려고 버튼을 눌러야 보이게 했습니다(about.html과 같은 주소). -->
         <button class="reveal" type="button" data-user="kgaeun369" data-domain="naver.com">이메일 보기</button>
       </section>
     </div>
-  </div>
   </div>
 </section>
 

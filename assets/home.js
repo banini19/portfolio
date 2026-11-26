@@ -543,7 +543,9 @@
   function deckHtml(c, k) {
     var own = c.pic.replace(/-s\.webp$/, '.webp'), names = deckNames(c, k);
     function ratio(u) { var z = sizes[u.replace(/^img\//, '').replace(/\.webp$/, '')]; return z ? z[0] / z[1] : 1.5; }
-    return '<button class="d-card" type="button" data-full="' + esc(own) + '" data-ar="' + ratio(own) + '" aria-label="크게 보기"></button>' +
+    // the front card has the card's picture painted on too (already loaded), so it never shows empty
+    return '<button class="d-card" type="button" data-full="' + esc(own) + '" data-ar="' + ratio(own) + '" aria-label="크게 보기"' +
+      ' style="background: #d8d2c7 url(\'' + esc(own) + '\') 50% 50% / cover no-repeat"></button>' +
       names.map(function (u) {
         return '<button class="d-card" type="button" data-full="' + esc(u) + '" data-ar="' + ratio(u) + '" aria-label="크게 보기">' +
           '<img data-src="' + esc(u) + '" alt="" decoding="async"></button>';

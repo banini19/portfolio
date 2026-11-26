@@ -144,7 +144,9 @@ html.d-open { overflow: hidden; }
 .d-card > img, .d-card > video { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
 .d-card:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
 .d-fly > img, .d-fly > video { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-.d-fly { position: fixed; z-index: 2; overflow: hidden; visibility: hidden; pointer-events: none; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); }
+/* the card's picture on its way: above the stack's cards (z 90-300), which now come out at the same time (11/26 user:
+   the empty front card showed over it) */
+.d-fly { position: fixed; z-index: 400; overflow: hidden; visibility: hidden; pointer-events: none; box-shadow: 0 22px 60px rgba(0, 0, 0, .28); }
 .d-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .d-close {
   position: absolute; top: calc(var(--g) + 14px); right: calc(var(--g) + 14px); z-index: 3;
@@ -348,28 +350,21 @@ html.d-open { overflow: hidden; }
     box-shadow: 0 -24px 60px rgba(29, 27, 24, calc(var(--p, 0) * (1 - var(--p, 0)) * .5));   /* only while moving */
   }
 }
-/* About me = the deck's About Me slide (PPT 김가은_프로젝트_포트폴리오_모스테입스, p.25; 11/25 user). Its heading is like the
-   works' one ("About Me" + "이력서" in the year's place; 11/26 user), so the slide's own title and white lines are gone.
-   On wide screens the slide below it is a 16:9 board, every part where and as big as on the slide (places in % of the
-   slide, sizes in cqw of the board: 1pt = 100cqw / 960); only its band from 20% to 90% of the height shows (.ab-view),
-   as big as fits under the heading, in the middle of the room left. Narrow screens: one under another. */
-/* the deck's type: 학교안심 은하수 R (KERIS · Design210, SIL Open Font License 1.1 — free to use and to put in a web page);
-   now for the two big headings ("Portfolio", "About Me") */
+/* About me: the heading like the works' one ("About Me" + "이력서" with its "열기" button), then a clean, quiet screen with few
+   words (11/26 user, after the deck's About Me slide had got too busy): the face drawing and the name on the left, on the
+   right Experience (the last job + school), Tool (program icons + what she can make as #tags) and Contact. Small grey
+   labels like the detail pages' ("Story", "Poster"), the words in the details' type. Narrow screens: one under another. */
+/* 학교안심 은하수 R (KERIS · Design210, SIL Open Font License 1.1 — free to use and to put in a web page): the two big
+   headings ("Portfolio", "About Me") */
 @font-face {
   font-family: "Hakgyoansim Eunhasu";
   src: url("fonts/HakgyoansimEunhasuR.ttf") format("truetype");
   font-weight: 400;
   font-display: swap;
 }
-/* the About details in the details' type (Bricolage Grotesque / Noto Sans KR, the page's own; 11/26 user); the heading keeps
-   the big title's type, "KIM GAEUN" the project names' */
-.about { display: flex; flex-direction: column; padding: 0 var(--g); overflow: clip; color: #000; }
-.ab-view {   /* --hs: the whole slide's height; the heading's height as in .grid (padding 32px + .86 of its size) */
-  --hs: min(calc((100vh - 32px - .86 * clamp(48px, 6.6vw, 112px) - 2 * var(--g)) / .7), calc(100cqw * 9 / 16));
-  position: relative; flex: none; width: calc(var(--hs) * 16 / 9); height: calc(var(--hs) * .7); margin: auto;
-}
-.about > .title { position: relative; z-index: 1; color: var(--ink); }   /* above the slide's box (it reaches up behind the heading), so "열기" can be clicked */
-/* the resume (PDF) opens in a new tab from beside "이력서" (11/26 user): a small round button, dark when pointed at */
+.about { display: flex; flex-direction: column; padding: 0 var(--g); overflow: clip; color: var(--ink); }
+.about > .title { position: relative; z-index: 1; color: var(--ink); }
+/* the resume (PDF on Google Drive) opens in a new tab from beside "이력서" (11/26 user): a small round button, dark when pointed at */
 .cv-open {
   display: inline-flex; align-items: center; gap: .3em; margin-left: .45em; padding: .45em .9em .42em;
   border: 1.5px solid rgba(29, 27, 24, .22); border-radius: 999px; color: var(--ink);
@@ -378,51 +373,42 @@ html.d-open { overflow: hidden; }
 }
 .cv-open:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
 .cv-open:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
-.cv-open svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }   /* the same colour as the works' heading */
-.ab-slide { position: absolute; left: 0; top: calc(var(--hs) * -.2); width: 100%; aspect-ratio: 16 / 9; container-type: inline-size; }
-.ab-slide > *, .ab-info > section { position: absolute; margin: 0; }
-.ab-me { left: 16.32%; top: 30.67%; width: 21.75cqw; }
-.ab-me img { width: 20.31cqw; height: auto; filter: drop-shadow(-.15cqw -.08cqw .22cqw rgba(0, 0, 0, .55)); }   /* the slide's soft shadow */
-.ab-me figcaption { margin-top: 4.58cqw; padding: 0 .75cqw; font: 400 calc(100cqw * 32 / 960) / 1.2 "Griun Sarang", "Hakgyoansim Eunhasu", sans-serif; text-align: center; text-shadow: 0 0 .3cqw rgba(0, 0, 0, .45); }
-.ab-info { left: 48.11%; top: 0; right: 0; bottom: 0; }
-.ab-info section { left: 0; padding: .375cqw .75cqw 0; }
-.ab-info h3 { margin: 0; color: #7c5726; font-size: calc(100cqw * 16 / 960); font-weight: 700; line-height: 1.2; }
-.ab-info p, .ab-info li { margin: 0; font-size: max(13px, 100cqw * 12 / 960); line-height: 2.15; white-space: nowrap; }   /* 12pt in the details' wider type (was 14pt), same line spacing as on the slide */
-/* 학력 and 경력 also as in the user's picture (a little higher than in the saved deck) */
-.ab-edu { top: 23.5%; }
-.ab-edu p { margin-top: .25cqw; }
-.ab-career { top: 37.43%; }
-.ab-career ul { margin: .36cqw 0 0; padding: 0; list-style: none; }
-.ab-career li { position: relative; padding-left: 2.344cqw; }
-.ab-career li::before { content: "\2022"; position: absolute; left: 0; font-family: Arial, sans-serif; }
-.ab-skill { top: 69.85%; }
-.ab-skill ul { display: flex; margin: .24cqw 0 0 -.75cqw; padding: 0; list-style: none; }
-.ab-skill li { flex: none; width: 4.569cqw; margin-right: -.186cqw; }
-.ab-skill img { width: 100%; height: auto; }
-.ab-info .ab-contact { top: 69.85%; left: 61.5%; }   /* beside the skills (not on the slide: the email button that was here before) */
-.reveal, .mail { display: inline-block; margin-top: .9cqw; padding: 0; border: 0; background: none; color: #000; font: 400 calc(100cqw * 12 / 960) / 1.8 "Bricolage Grotesque", "Noto Sans KR", sans-serif; text-decoration: underline; text-underline-offset: .25em; cursor: pointer; }
-.reveal:hover, .mail:hover { color: #7c5726; }
+.cv-open svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ab-body {
+  flex: 1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; gap: clamp(28px, 5vw, 96px);
+  width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 clamp(8px, 2vw, 40px) clamp(24px, 6vh, 72px);
+}
+.ab-me { margin: 0; text-align: center; }
+.ab-me img { width: min(100%, 40vh, 340px); height: auto; margin: 0 auto; }   /* no shadow (11/26 user) */
+.ab-me figcaption { margin-top: clamp(14px, 3vh, 30px); font: 400 clamp(30px, 3vw, 46px) / 1 "Griun Sarang", sans-serif; text-shadow: 0 0 3px rgba(0, 0, 0, .35); }
+.ab-info { display: flex; flex-direction: column; gap: clamp(26px, 5.5vh, 56px); }
+.ab-info section { margin: 0; }
+.ab-info h3 { margin: 0 0 12px; color: var(--mute); font-size: 14px; font-weight: 600; letter-spacing: .02em; }   /* like .d-label */
+.ab-exp ul { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 22px; margin: 0; padding: 0; list-style: none; font-size: clamp(15px, 1.2vw, 19px); line-height: 1.5; }
+.ab-exp li { display: contents; }
+.ab-exp li span { color: var(--mute); font-variant-numeric: tabular-nums; }
+.ab-icons { display: flex; gap: 4px; margin: 0 0 0 -4px; padding: 0; list-style: none; }
+.ab-icons li { flex: none; width: clamp(44px, 3.4vw, 56px); }
+.ab-icons img { width: 100%; height: auto; }
+.ab-tags { display: flex; flex-wrap: wrap; gap: 4px 14px; max-width: 34em; margin: 12px 0 0; padding: 0; list-style: none; font-size: clamp(14px, 1.05vw, 17px); line-height: 1.6; }
+.reveal, .mail { display: inline-block; padding: 0; border: 0; background: none; color: var(--ink); font: 400 clamp(15px, 1.2vw, 19px) / 1.5 "Bricolage Grotesque", "Noto Sans KR", sans-serif; text-decoration: underline; text-underline-offset: .25em; cursor: pointer; }
+.reveal:hover, .mail:hover { color: var(--mute); }
 /* the parts come up one after another */
 .rise .about .ab-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .8s cubic-bezier(.2, .7, .2, 1); }
 .rise .about.in .ab-in { opacity: 1; transform: none; }
-.rise .about.in .ab-edu { transition-delay: .08s; }
-.rise .about.in .ab-career { transition-delay: .16s; }
-.rise .about.in .ab-skill, .rise .about.in .ab-contact { transition-delay: .24s; }
-@media (max-width: 999px) {
-  .about { display: block; padding: 0 var(--g) 56px; }
-  .ab-view { width: auto; height: auto; margin: 0; padding: 0 14px; }
-  .ab-slide { position: static; display: grid; width: auto; aspect-ratio: auto; container-type: normal; }
-  .ab-slide > *, .ab-info > section { position: static; }
-  .ab-me { justify-self: center; width: auto; margin-top: 20px; }
-  .ab-me img { width: min(58vw, 300px); filter: drop-shadow(-1px -1px 2px rgba(0, 0, 0, .5)); }
-  .ab-me figcaption { margin-top: 18px; padding: 0; font-size: clamp(28px, 7vw, 40px); text-shadow: 0 0 3px rgba(0, 0, 0, .4); }
-  .ab-info { margin-top: 18px; }
-  .ab-info section { padding: 0; margin-top: 28px; }
-  .ab-info h3 { font-size: 19px; }
-  .ab-info p, .ab-info li { font-size: 16px; line-height: 1.75; white-space: normal; word-break: keep-all; }
-  .ab-career ul { margin-top: 4px; }
-  .ab-career li { padding-left: 18px; }
-  .ab-skill ul { flex-wrap: wrap; margin: 8px 0 0 -6px; }
-  .ab-skill li { width: 52px; margin-right: -3px; }   /* six in one line on a phone */
-  .reveal, .mail { margin-top: 6px; font-size: 16px; }
+.rise .about.in .ab-exp { transition-delay: .08s; }
+.rise .about.in .ab-tool { transition-delay: .16s; }
+.rise .about.in .ab-contact { transition-delay: .24s; }
+@media (max-width: 760px) {
+  .about { padding-bottom: 56px; }
+  .ab-body { grid-template-columns: 1fr; gap: 36px; padding: 16px 14px 0; }
+  .ab-me img { width: min(58vw, 260px); }
+  .ab-me figcaption { font-size: clamp(28px, 7vw, 40px); }
+  .ab-info { gap: 32px; }
+  .ab-exp ul { grid-template-columns: 1fr; gap: 2px; font-size: 16px; }
+  .ab-exp li span { margin-top: 10px; font-size: 14px; }
+  .ab-exp li span:first-child { margin-top: 0; }
+  .ab-icons li { width: 50px; }
+  .ab-tags { font-size: 15px; }
+  .reveal, .mail { font-size: 16px; }
 }
