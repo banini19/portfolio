@@ -1,7 +1,5 @@
-# Kim Gaeun · Portfolio
+# Kim Gaeun · Portfolio (moved)
 
-김가은의 일러스트·애니메이션 포트폴리오 사이트를 배포하는 저장소입니다.
+이 저장소의 사이트는 새 주소로 옮겼습니다: https://dong-ii.github.io/
 
-- 사이트: https://banini19.github.io/portfolio/
-- 이 저장소의 파일은 비공개 원본 저장소의 배포 스크립트가 자동으로 만듭니다. 여기서 직접 고치지 않습니다.
-- 그림의 저작권은 각 작업의 저작권자에게 있습니다. 무단 사용을 금합니다.
+예전 주소 `https://banini19.github.io/portfolio/...`로 들어오면 새 주소의 같은 화면으로 넘어갑니다.
